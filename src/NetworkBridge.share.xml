@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+    <op:minOpenKNXproducerVersion value="3.13.1" />
+    <op:config name="%NTB_NumChannelsDefault%" value="0" />
+    <ManufacturerData>
+        <Manufacturer>
+            <ApplicationPrograms>
+                <ApplicationProgram>
+                    <Static>
+                        <ParameterTypes>
+                            <ParameterType Id="%AID%_PT-NTBNumChannels" Name="NTBNumChannels">
+                                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBChannelType" Name="NTBChannelType">
+                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                    <Enumeration Id="%ENID%" Value="0" Text="Deaktiviert" />
+                                    <Enumeration Id="%ENID%" Value="1" Text="Ping" />
+                                </TypeRestriction>
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBHostAddress" Name="NTBHostAddress">
+                                <TypeIPAddress AddressType="HostAddress" />
+                            </ParameterType>
+                        </ParameterTypes>
+                        <Parameters>
+                            <Union SizeInBit="8">
+                                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+                                <Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-NTBNumChannels" Offset="0" BitOffset="0" Text="Verfuegbare Kanaele" Value="%NTB_NumChannelsDefault%" SuffixText=" von %N%" />
+                            </Union>
+                        </Parameters>
+                        <ParameterRefs>
+                            <ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
+                        </ParameterRefs>
+                        <ComObjectTable>
+                        </ComObjectTable>
+                        <ComObjectRefs>
+                        </ComObjectRefs>
+                    </Static>
+                    <Dynamic>
+                        <Channel Name="MainChannel%TT%" Text="Network Bridge" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="texture-box">
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="NTBSettings" Text="Allgemein" Icon="cog-outline">
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Network Bridge" UIHint="Headline" />
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+                            </ParameterBlock>
+
+                            <op:include href="NetworkBridge.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="NTB" IsInner="true" />
+
+                            <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
+                                <when test="&lt;%N%">
+                                    <ParameterBlock Id="%AID%_PB-nnn" Name="NTBAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">
+                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+                                    </ParameterBlock>
+                                </when>
+                            </choose>
+                        </Channel>
+                    </Dynamic>
+                </ApplicationProgram>
+            </ApplicationPrograms>
+        </Manufacturer>
+    </ManufacturerData>
+</KNX>
