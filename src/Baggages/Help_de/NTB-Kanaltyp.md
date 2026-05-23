@@ -1,5 +1,5 @@
 ﻿### Typ
 
 Bestimmt die Funktion des Kanals.
-Aktuell ist der Typ `Ping` verfuegbar.
+Aktuell ist der Typ `Ping` verfügbar.
 

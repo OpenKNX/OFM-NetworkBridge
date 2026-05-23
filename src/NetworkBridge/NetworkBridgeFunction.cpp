@@ -6,20 +6,15 @@ NetworkBridgeFunction::NetworkBridgeFunction(uint8_t channelIndex, const char* n
     _name = name;
 }
 
-void NetworkBridgeFunction::setup(bool configured)
+void NetworkBridgeFunction::setup()
 {
-    OpenKNX::Channel::setup(configured);
+    OpenKNX::Channel::setup();
     readInputKos();
-}
+  }
 
 const std::string NetworkBridgeFunction::name()
 {
     return _name;
-}
-
-void NetworkBridgeFunction::processInputKo(GroupObject &ko)
-{
-    handleKo(ko);
 }
 
 bool NetworkBridgeFunction::processCommand(const std::string cmd, bool diagnoseKo)

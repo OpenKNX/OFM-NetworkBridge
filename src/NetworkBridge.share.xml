@@ -27,32 +27,48 @@
                                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                                 <Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-NTBNumChannels" Offset="0" BitOffset="0" Text="Verfuegbare Kanaele" Value="%NTB_NumChannelsDefault%" SuffixText=" von %N%" />
                             </Union>
+                            <Parameter Id="%AID%_P-%TT%00001" Name="AddNotAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="AddNotAllowed" Value="0" Access="None" />
                         </Parameters>
                         <ParameterRefs>
                             <ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
+                            <ParameterRef Id="%AID%_P-%TT%00001_R-%TT%0000101" RefId="%AID%_P-%TT%00001" />
                         </ParameterRefs>
                         <ComObjectTable>
                         </ComObjectTable>
                         <ComObjectRefs>
                         </ComObjectRefs>
+                        <Script>
+                            <op:include href="NetworkBridge.script.js" prefix="NTB" type="script" />
+                        </Script>
                     </Static>
                     <Dynamic>
-                        <Channel Name="MainChannel%TT%" Text="Network Bridge" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="texture-box" HelpContext="NTB-Dokumentation">
+                        <Channel Name="MainChannel%TT%" Text="Network Bridge" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="table-network" HelpContext="NTB-Dokumentation">
                             <ParameterBlock Id="%AID%_PB-nnn" Name="NTBSettings" Text="Allgemein" Icon="cog-outline" HelpContext="NTB-Dokumentation">
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Network Bridge" UIHint="Headline" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
                                 <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="NTB-Verfuegbare-Kanaele" />
+
+                                <op:include href="NetworkBridge.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Settings']/*" type="template" prefix="NTB" IsInner="true" />
                             </ParameterBlock>
 
-                            <op:include href="NetworkBridge.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="NTB" IsInner="true" />
+                            <op:include href="NetworkBridge.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel']/*" type="template" prefix="NTB" IsInner="true" />
 
                             <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                                 <when test="&lt;%N%">
                                     <ParameterBlock Id="%AID%_PB-nnn" Name="NTBAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">
                                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" IndentLevel="1" HelpContext="NTB-Verfuegbare-Kanaele" />
+                                        <op:include href="NetworkBridge.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='More']/*" type="template" prefix="NTB" IsInner="true" />
+
+                                        <ParameterRefRef RefId="%AID%_P-%TT%00001_R-%TT%0000101" />
+                                        <choose ParamRefId="%AID%_P-%TT%00001_R-%TT%0000101">
+                                            <when test="1">
+                                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinzufuegen von 'Deaktiviert' nicht moeglich. Es muss zuerst ein Typ gewaehlt werden." UIHint="Error" />
+                                            </when>
+                                        </choose>
+
+                                        <Button Id="%AID%_B-%TT%00200" Text="Hinzufuegen" EventHandler="nbAddChannel" />
                                     </ParameterBlock>
                                 </when>
                             </choose>

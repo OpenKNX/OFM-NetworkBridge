@@ -1,4 +1,4 @@
-﻿### Verfuegbare Kanaele
+﻿### Verfügbare Kanäle
 
-Legt fest, wie viele Kanaele in der ETS sichtbar und konfigurierbar sind.
+Legt fest, wie viele Kanäle in der ETS sichtbar und konfigurierbar sind.
 

@@ -1,4 +1,4 @@
 ﻿### Kanal deaktivieren (Test)
 
-Deaktiviert den Kanal fuer Testzwecke, ohne die restliche Konfiguration zu loeschen.
+Deaktiviert den Kanal für Testzwecke, ohne die restliche Konfiguration zu löschen.
 

@@ -19,3 +19,13 @@ Dieses Modul soll neue Netzwerk-Funktionen als separate Channel-Typen bereitstel
 3. Die Hilfe-Dateien werden mit `createDoc.ps1` erzeugt (Befehl: `OpenKNXproducer baggages -d doc/Applikationsbeschreibung-NetworkBridge.md -b src/Baggages/Help_de -p NTB`).
 4. In `src/NetworkBridge.share.xml` muss der `Baggages`-Block fuer `Help_de.zip` und `Icons.zip` vorhanden bleiben.
 5. Nach Doku-/HelpContext-Aenderungen zuerst `createDoc.ps1` im Modul ausfuehren und danach `OpenKNXproducer create --Debug -h include/knxprod.h src/InternetServices-Dev` aus dem Workspace-Root (`OAM-InternetServices`) validieren.
+6. Deutsche Texte in `doc/Applikationsbeschreibung-NetworkBridge.md` mit echten Umlauten schreiben (`ä`, `ö`, `ü`, `ß`) und keine Umschreibungen wie `ae/oe/ue` verwenden, sofern nicht explizit anders gefordert.
+7. Nach jeder Textaenderung an der Applikationsbeschreibung mindestens eine kurze Sichtpruefung der erzeugten Dateien in `src/Baggages/Help_de` durchfuehren.
+
+## Regeln fuer Ping Runtime
+
+1. Bei aktiviertem Automatik-Ping in `PingFunction::setup()` sofort `triggerPing(false)` aufrufen.
+2. Zeitmessung fuer den zyklischen Ping immer mit `unsigned long` und Delta-Vergleich umsetzen (`now - start >= interval`), analog OFM-FunctionBlocks.
+3. Als Zeitmarke den Startzeitpunkt speichern (`_startTimeStampForNextPing = max(1ul, millis())`).
+4. Die ETS-IP aus `ParamNTB_CHPingTargetAddress` ist Big-Endian codiert; Mapping nach `IPAddress(a,b,c,d)` erfolgt als `>>24, >>16, >>8, >>0`.
+5. IP-Logging ueber `toString().c_str()` ausgeben.

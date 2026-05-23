@@ -1,5 +1,5 @@
 ﻿### Automatischer Ping
 
-Wenn aktiviert, wird der Ping zyklisch ausgefuehrt.
-Wenn deaktiviert, erfolgt der Ping nur durch den Trigger ueber das Kommunikationsobjekt.
+Wenn aktiviert, wird der Ping zyklisch ausgeführt.
+Wenn deaktiviert, erfolgt der Ping nur durch den Trigger über das Kommunikationsobjekt.
 

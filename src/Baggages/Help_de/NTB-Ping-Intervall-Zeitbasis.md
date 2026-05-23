@@ -1,4 +1,4 @@
 ﻿### Intervall Zeitbasis
 
-Waehlt die Zeiteinheit fuer das automatische Ping-Intervall.
+Wählt die Zeiteinheit für das automatische Ping-Intervall.
 

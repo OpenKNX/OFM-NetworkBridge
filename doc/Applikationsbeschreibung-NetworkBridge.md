@@ -5,31 +5,37 @@
 <!-- DOC HelpContext="Dokumentation" -->
 
 Die Network Bridge stellt pro Kanal eine Netzwerkfunktion bereit.
-Aktuell steht als Kanaltyp ein Ping-Check zur Verfuegung.
+Aktuell steht als Kanaltyp ein Ping-Check zur Verfügung.
 
 ## ETS Konfiguration
 
 <!-- DOC HelpContext="Verfuegbare-Kanaele" -->
-### Verfuegbare Kanaele
+### Verfügbare Kanäle
 
-Legt fest, wie viele Kanaele in der ETS sichtbar und konfigurierbar sind.
+Legt fest, wie viele Kanäle in der ETS sichtbar und konfigurierbar sind.
 
 <!-- DOC HelpContext="Bezeichnung" -->
 ### Bezeichnung
 
-Frei waehlbarer Name des Kanals.
+Frei wählbarer Name des Kanals.
 Der Name wird in der ETS zur besseren Zuordnung von Kanal und Kommunikationsobjekten verwendet.
 
 <!-- DOC HelpContext="Kanaltyp" -->
 ### Typ
 
 Bestimmt die Funktion des Kanals.
-Aktuell ist der Typ `Ping` verfuegbar.
+Aktuell ist der Typ `Ping` verfügbar.
 
 <!-- DOC HelpContext="Kanal-deaktivieren" -->
 ### Kanal deaktivieren (Test)
 
-Deaktiviert den Kanal fuer Testzwecke, ohne die restliche Konfiguration zu loeschen.
+Deaktiviert den Kanal für Testzwecke, ohne die restliche Konfiguration zu löschen.
+
+<!-- DOC HelpContext="Ping" -->
+## Ping
+
+Konfiguration des Kanaltyps `Ping`.
+Der Kanal prüft die Erreichbarkeit einer Ziel-IP-Adresse und stellt Trigger- und Statusobjekte bereit.
 
 <!-- DOC HelpContext="Ping-Ziel-IP-Adresse" -->
 ### Ziel IP-Adresse
@@ -39,15 +45,15 @@ IP-Adresse des Hosts, der vom Kanal angepingt wird.
 <!-- DOC HelpContext="Ping-Automatisch" -->
 ### Automatischer Ping
 
-Wenn aktiviert, wird der Ping zyklisch ausgefuehrt.
-Wenn deaktiviert, erfolgt der Ping nur durch den Trigger ueber das Kommunikationsobjekt.
+Wenn aktiviert, wird der Ping zyklisch ausgeführt.
+Wenn deaktiviert, erfolgt der Ping nur durch den Trigger über das Kommunikationsobjekt.
 
 <!-- DOC HelpContext="Ping-Intervall-Zeitbasis" -->
 ### Intervall Zeitbasis
 
-Waehlt die Zeiteinheit fuer das automatische Ping-Intervall.
+Wählt die Zeiteinheit für das automatische Ping-Intervall.
 
 <!-- DOC HelpContext="Ping-Intervall-Zeit" -->
 ### Intervall Zeit
 
-Definiert die Intervalllaenge fuer den automatischen Ping in der ausgewaehlten Zeitbasis.
+Definiert die Intervalllänge für den automatischen Ping in der ausgewählten Zeitbasis.

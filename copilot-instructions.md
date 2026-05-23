@@ -22,6 +22,12 @@
 3. Sicherstellen, dass `src/NetworkBridge.share.xml` den `Baggages`-Block fuer `Help_de.zip` und `Icons.zip` enthaelt.
 4. Gesamtpruefung immer aus dem Workspace-Root starten: `OpenKNXproducer create --Debug -h include/knxprod.h src/InternetServices-Dev`.
 
+## Sprachqualitaet fuer Doku
+
+1. In der Applikationsbeschreibung und den daraus generierten Help-Dateien deutsche Umlaute normal schreiben (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`) und nicht als `ae/oe/ue/ss` ersetzen.
+2. Nach Textaenderungen in `doc/Applikationsbeschreibung-NetworkBridge.md` immer `./createDoc.ps1` ausfuehren und mindestens stichprobenartig die generierten Dateien unter `src/Baggages/Help_de` pruefen.
+3. Wenn der Benutzer explizit bestimmte Schreibweisen vorgibt, haben diese Vorrang.
+
 ## Aktuell dokumentierte HelpContext-Ids
 
 - `NTB-Dokumentation`
@@ -38,3 +44,12 @@
 
 - Typ `0`: Deaktiviert
 - Typ `1`: Ping (Template, ohne Runtime-Funktion)
+
+## Ping Runtime Verhalten
+
+1. Bei aktiviertem Automatik-Ping wird in `PingFunction::setup()` sofort ein erster Ping mit `triggerPing(false)` gestartet.
+2. Der zyklische Folgetimer verwendet `unsigned long` mit Delta-Vergleich im Stil von FunctionBlocks:
+	`now - _startTimeStampForNextPing >= pingIntervalMs()`.
+3. `scheduleNextAutomaticPing()` speichert den Startzeitpunkt (`max(1ul, millis())`), nicht einen absoluten Zielzeitpunkt.
+4. Die ETS-IP aus `ParamNTB_CHPingTargetAddress` ist Big-Endian codiert und muss fuer `IPAddress(a,b,c,d)` als `>>24, >>16, >>8, >>0` gemappt werden.
+5. Logs fuer IP-Adressen sollen `IPAddress::toString().c_str()` verwenden.

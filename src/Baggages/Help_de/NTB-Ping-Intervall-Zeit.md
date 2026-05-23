@@ -1,3 +1,3 @@
 ﻿### Intervall Zeit
 
-Definiert die Intervalllaenge fuer den automatischen Ping in der ausgewaehlten Zeitbasis.
+Definiert die Intervalllänge für den automatischen Ping in der ausgewählten Zeitbasis.
