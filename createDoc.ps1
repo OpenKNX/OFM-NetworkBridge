@@ -1,0 +1,1 @@
+OpenKNXproducer baggages -d doc/Applikationsbeschreibung-NetworkBridge.md -b src/Baggages/Help_de -p NTB
