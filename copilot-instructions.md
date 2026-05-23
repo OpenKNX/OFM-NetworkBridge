@@ -14,6 +14,7 @@
 4. Fuer Trigger/Status-KOs bestehende DPT-Konventionen verwenden.
 5. Sichtbare Parameter in der ETS muessen ueber `ParameterRefRef` mit `IndentLevel` und `HelpContext` versehen werden.
 6. `HelpContext`-Namen fuer dieses Modul verwenden den Prefix `NTB-`.
+7. Zeitparameter fuer den Ping-Kanal in `src/NetworkBridge.templ.xml` als Tabelle (Inline-Grid) darstellen, analog OFM-FunctionBlocks (Zeitwert und Zeitbasis in einer gemeinsamen Zeile).
 
 ## Help/Doku Workflow
 

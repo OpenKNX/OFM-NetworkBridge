@@ -21,6 +21,7 @@ Dieses Modul soll neue Netzwerk-Funktionen als separate Channel-Typen bereitstel
 5. Nach Doku-/HelpContext-Aenderungen zuerst `createDoc.ps1` im Modul ausfuehren und danach `OpenKNXproducer create --Debug -h include/knxprod.h src/InternetServices-Dev` aus dem Workspace-Root (`OAM-InternetServices`) validieren.
 6. Deutsche Texte in `doc/Applikationsbeschreibung-NetworkBridge.md` mit echten Umlauten schreiben (`ä`, `ö`, `ü`, `ß`) und keine Umschreibungen wie `ae/oe/ue` verwenden, sofern nicht explizit anders gefordert.
 7. Nach jeder Textaenderung an der Applikationsbeschreibung mindestens eine kurze Sichtpruefung der erzeugten Dateien in `src/Baggages/Help_de` durchfuehren.
+8. Im Ping-Kanal (`src/NetworkBridge.templ.xml`) die Zeitparameter immer als Tabelle (Inline-Grid) umsetzen, analog OFM-FunctionBlocks (Zeitwert und Zeitbasis in einer gemeinsamen Zeile).
 
 ## Regeln fuer Ping Runtime
 
