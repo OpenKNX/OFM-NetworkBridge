@@ -1,5 +1,6 @@
 #pragma once
 #include "OpenKNX.h"
+#include "MemoryAllocator.h"
 
 class NTBChannelOwnerModule : public OpenKNX::Module
 {
@@ -9,6 +10,10 @@ private:
     OpenKNX::Channel** _pChannels = nullptr;
 
 public:
+ static void* operator new(size_t size)
+    {
+        return HS_MALLOC(size);
+    }  
     void initialize(uint8_t numberOfChannels);
     ~NTBChannelOwnerModule();
 

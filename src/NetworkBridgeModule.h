@@ -1,10 +1,15 @@
 #pragma once
 #include "ChannelOwnerModule.h"
 #include "ModuleVersionCheck.h"
+#include "MemoryAllocator.h"
 
 class NetworkBridgeModule : public NTBChannelOwnerModule
 {
 public:
+ static void* operator new(size_t size)
+    {
+        return HS_MALLOC(size);
+    }  
     NetworkBridgeModule() = default;
     const std::string name() override { return "NetworkBridgeModule"; }
     const std::string version() override;
