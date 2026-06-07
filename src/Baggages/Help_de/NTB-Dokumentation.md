@@ -8,4 +8,6 @@ Verfügbare Kanaltypen:
 - Wake on LAN
 - Webhook empfangen
 - Webhook senden
+- MQTT empfangen
+- MQTT senden
 

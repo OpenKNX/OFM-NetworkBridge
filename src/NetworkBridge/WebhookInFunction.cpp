@@ -36,7 +36,7 @@ void WebhookInFunction::loop()
     if (_triggered)
     {
         _triggered = false;
-        KoNTB_CHStatus.value(true, DPT_Switch);
-        KoNTB_CHStatus.objectWritten();
+        KoNTB_CHOut.value(true, DPT_Switch);
+        KoNTB_CHOut.objectWritten();
     }
 }

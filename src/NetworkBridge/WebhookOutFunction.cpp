@@ -26,7 +26,7 @@ void WebhookOutFunction::initMissingInputValues() {}
 void WebhookOutFunction::processInputKo(GroupObject &ko)
 {
     auto index = NTB_KoCalcIndex(ko.asap());
-    if (index == NTB_KoCHTrigger && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
+    if (index == NTB_KoCHIn && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
     {
 #ifdef OPENKNX_WEBCLIENT
         auto done = [this](const OpenKNX::Network::Webclient::Response& r) {
@@ -66,13 +66,13 @@ void WebhookOutFunction::loop()
     _hasPendingResult = false;
     if (_statusMode == 1)
     {
-        KoNTB_CHStatus.value(_pendingStatus == 200, DPT_Switch);
-        KoNTB_CHStatus.objectWritten();
+        KoNTB_CHOut.value(_pendingStatus == 200, DPT_Switch);
+        KoNTB_CHOut.objectWritten();
     }
     else if (_statusMode == 2)
     {
-        KoNTB_CHStatus.value((uint16_t)_pendingStatus, Dpt(7, 1));
-        KoNTB_CHStatus.objectWritten();
+        KoNTB_CHOut.value((uint16_t)_pendingStatus, Dpt(7, 1));
+        KoNTB_CHOut.objectWritten();
     }
 }
 

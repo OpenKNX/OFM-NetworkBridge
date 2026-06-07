@@ -19,6 +19,8 @@
                                     <Enumeration Id="%ENID%" Value="2" Text="Wake on LAN" />
                                     <Enumeration Id="%ENID%" Value="3" Text="Webhook empfangen" />
                                     <Enumeration Id="%ENID%" Value="4" Text="Webhook senden" />
+                                    <Enumeration Id="%ENID%" Value="5" Text="MQTT empfangen" />
+                                    <Enumeration Id="%ENID%" Value="6" Text="MQTT senden" />
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBHostAddress" Name="NTBHostAddress">
@@ -58,6 +60,36 @@
                                     <Enumeration Id="%ENID%" Value="1" Text="Plain" />
                                     <Enumeration Id="%ENID%" Value="2" Text="XML" />
                                     <Enumeration Id="%ENID%" Value="3" Text="JSON" />
+                                </TypeRestriction>
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBMqttDpt" Name="NTBMqttDpt">
+                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                    <Enumeration Id="%ENID%" Value="0" Text="DPT-1" />
+                                    <Enumeration Id="%ENID%" Value="1" Text="DPT-5" />
+                                    <Enumeration Id="%ENID%" Value="2" Text="DPT-5 (%)" />
+                                    <Enumeration Id="%ENID%" Value="3" Text="DPT-6" />
+                                    <Enumeration Id="%ENID%" Value="4" Text="DPT-7" />
+                                    <Enumeration Id="%ENID%" Value="5" Text="DPT-8" />
+                                    <Enumeration Id="%ENID%" Value="6" Text="DPT-9" />
+                                    <Enumeration Id="%ENID%" Value="7" Text="DPT-12" />
+                                    <Enumeration Id="%ENID%" Value="8" Text="DPT-13" />
+                                    <Enumeration Id="%ENID%" Value="9" Text="DPT-14" />
+                                </TypeRestriction>
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBMqttInTopic" Name="NTBMqttInTopic">
+                                <TypeText SizeInBit="1024" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBMqttInJsonPath" Name="NTBMqttInJsonPath">
+                                <TypeText SizeInBit="512" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBMqttOutTopic" Name="NTBMqttOutTopic">
+                                <TypeText SizeInBit="1024" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBMqttOutQos" Name="NTBMqttOutQos">
+                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                    <Enumeration Id="%ENID%" Value="0" Text="QoS 0 (At most once)" />
+                                    <Enumeration Id="%ENID%" Value="1" Text="QoS 1 (At least once)" />
+                                    <Enumeration Id="%ENID%" Value="2" Text="QoS 2 (Exactly once)" />
                                 </TypeRestriction>
                             </ParameterType>
                         </ParameterTypes>

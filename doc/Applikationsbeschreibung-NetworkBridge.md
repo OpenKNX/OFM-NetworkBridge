@@ -11,6 +11,8 @@ Verfügbare Kanaltypen:
 - Wake on LAN
 - Webhook empfangen
 - Webhook senden
+- MQTT empfangen
+- MQTT senden
 
 ## ETS Konfiguration
 
@@ -29,7 +31,7 @@ Der Name wird in der ETS zur besseren Zuordnung von Kanal und Kommunikationsobje
 ### Typ
 
 Bestimmt die Funktion des Kanals.
-Verfügbare Typen: `Ping`, `Wake on LAN`, `Webhook empfangen`, `Webhook senden`.
+Verfügbare Typen: `Ping`, `Wake on LAN`, `Webhook empfangen`, `Webhook senden`, `MQTT empfangen`, `MQTT senden`.
 
 <!-- DOC HelpContext="Kanal-deaktivieren" -->
 ### Kanal deaktivieren (Test)
@@ -141,3 +143,91 @@ Legt den MIME-Typ des Requests fest.
 - **Plain**: `text/plain`
 - **XML**: `application/xml`
 - **JSON**: `application/json`
+
+<!-- DOC HelpContext="MqttIn" -->
+## MQTT empfangen
+
+Konfiguration des Kanaltyps `MQTT empfangen`.
+Der Kanal abonniert ein MQTT-Topic und schreibt den empfangenen Wert auf ein KNX-Kommunikationsobjekt.
+Der Datentyp des Kommunikationsobjekts wird über den Parameter `Datentyp` festgelegt.
+
+<!-- DOC HelpContext="MqttIn-Topic" -->
+### Topic
+
+MQTT-Topic, das abonniert wird.
+Wildcards sind erlaubt:
+
+- `+` steht für genau eine Ebene (z. B. `sensoren/+/temperatur`)
+- `#` steht für beliebig viele Ebenen am Ende (z. B. `sensoren/#`)
+
+<!-- DOC HelpContext="MqttIn-Dpt" -->
+### Datentyp
+
+Legt fest, wie der empfangene MQTT-Payload in einen KNX-Wert umgewandelt wird.
+
+- **DPT-1 (Bool)**: `1` oder `true` → `1`, alles andere → `0`
+- **DPT-5 (8 Bit)**: Ganzzahl 0–255
+- **DPT-5.001 (Prozent)**: Prozentwert 0–100, wird auf 0–255 skaliert (100 Prozent → 255)
+- **DPT-6**: Vorzeichenbehaftete 8-Bit-Ganzzahl
+- **DPT-7**: Vorzeichenlose 16-Bit-Ganzzahl
+- **DPT-8**: Vorzeichenbehaftete 16-Bit-Ganzzahl
+- **DPT-9**: 16-Bit-Gleitkommazahl
+- **DPT-12**: Vorzeichenlose 32-Bit-Ganzzahl
+- **DPT-13**: Vorzeichenbehaftete 32-Bit-Ganzzahl
+- **DPT-14**: 32-Bit-Gleitkommazahl
+
+<!-- DOC HelpContext="MqttIn-Json" -->
+### JSON-Filter
+
+Wenn aktiviert, wird der MQTT-Payload als JSON interpretiert und ein einzelner Wert per Pfad extrahiert.
+Der Pfad folgt dem Standard RFC 6901 (JSON Pointer).
+
+Beispiele:
+
+- Payload `{"temp":22.5}`, Pfad `/temp` → Wert `22.5`
+- Payload `{"sensors":[{"val":10}]}`, Pfad `/sensors/0/val` → Wert `10`
+
+Ist die Checkbox deaktiviert, wird der gesamte Payload als Wert verwendet.
+
+<!-- DOC HelpContext="MqttOut" -->
+## MQTT senden
+
+Konfiguration des Kanaltyps `MQTT senden`.
+Der Kanal veröffentlicht den empfangenen KNX-Wert als MQTT-Nachricht auf dem konfigurierten Topic.
+
+<!-- DOC HelpContext="MqttOut-Topic" -->
+### Topic
+
+MQTT-Topic, auf dem der Wert veröffentlicht wird.
+
+<!-- DOC HelpContext="MqttOut-Dpt" -->
+### Datentyp
+
+Legt fest, wie der KNX-Wert in einen MQTT-Payload umgewandelt wird.
+Die verfügbaren Typen entsprechen denen des Kanaltyps `MQTT empfangen`.
+
+<!-- DOC HelpContext="MqttOut-Qos" -->
+### QoS
+
+Quality of Service für die MQTT-Nachricht.
+
+- **QoS 0 (At most once)**: Nachricht wird einmal gesendet, keine Bestätigung.
+- **QoS 1 (At least once)**: Nachricht wird mindestens einmal zugestellt, Bestätigung durch Broker.
+- **QoS 2 (Exactly once)**: Nachricht wird genau einmal zugestellt, aufwendigeres Handshake.
+
+<!-- DOC HelpContext="MqttOut-Retain" -->
+### Retain
+
+Wenn aktiviert, speichert der Broker die letzte Nachricht auf dem Topic und sendet sie sofort an neu verbundene Empfänger.
+
+<!-- DOC HelpContext="MqttOut-DevicePrefix" -->
+### Geräte-Präfix
+
+Wenn aktiviert, wird dem Topic automatisch der gerätespezifische Präfix des Geräts vorangestellt (z. B. `openknx/<SerialNr>/`).
+Damit lassen sich mehrere Geräte mit identischen Topics eindeutig unterscheiden.
+
+<!-- DOC HelpContext="MqttOut-AsJson" -->
+### Als JSON senden
+
+Wenn aktiviert, wird der Wert als JSON-Objekt versendet: `{"value": <Wert>}`.
+Ist die Option deaktiviert, wird der Wert direkt als Zeichenkette gesendet.

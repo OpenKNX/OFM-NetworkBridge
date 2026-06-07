@@ -42,6 +42,24 @@
                                 <Parameter Id="%AID%_UP-%TT%%CC%042" Name="CH%C%WebhookOutMethod" ParameterType="%AID%_PT-NTBWebhookOutMethod" Offset="97" BitOffset="0" Text="Methode" Value="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%043" Name="CH%C%WebhookOutContentType" ParameterType="%AID%_PT-NTBWebhookOutContentType" Offset="98" BitOffset="0" Text="Content-Type" Value="0" />
                             </Union>
+
+                            <Union SizeInBit="1552" op:nowarn="true">
+                                <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%050" Name="CH%C%MqttInTopic" ParameterType="%AID%_PT-NTBMqttInTopic" Offset="0" BitOffset="0" Text="Topic" Value="" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%051" Name="CH%C%MqttInDpt" ParameterType="%AID%_PT-NTBMqttDpt" Offset="128" BitOffset="0" Text="Datentyp" Value="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%052" Name="CH%C%MqttInJsonEnabled" ParameterType="%AID%_PT-CheckBox" Offset="129" BitOffset="0" Text="JSON-Daten" Value="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%053" Name="CH%C%MqttInJsonPath" ParameterType="%AID%_PT-NTBMqttInJsonPath" Offset="130" BitOffset="0" Text="JSON-Pfad" Value="" />
+                            </Union>
+
+                            <Union SizeInBit="1064" op:nowarn="true">
+                                <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%060" Name="CH%C%MqttOutTopic" ParameterType="%AID%_PT-NTBMqttOutTopic" Offset="0" BitOffset="0" Text="Topic" Value="" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%061" Name="CH%C%MqttOutDpt" ParameterType="%AID%_PT-NTBMqttDpt" Offset="128" BitOffset="0" Text="Datentyp" Value="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%062" Name="CH%C%MqttOutQos" ParameterType="%AID%_PT-NTBMqttOutQos" Offset="129" BitOffset="0" Text="QoS" Value="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%063" Name="CH%C%MqttOutRetain" ParameterType="%AID%_PT-CheckBox" Offset="130" BitOffset="0" Text="Retain" Value="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%064" Name="CH%C%MqttOutDevicePrefix" ParameterType="%AID%_PT-CheckBox" Offset="131" BitOffset="0" Text="Geräte-Präfix" Value="0" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%065" Name="CH%C%MqttOutAsJson" ParameterType="%AID%_PT-CheckBox" Offset="132" BitOffset="0" Text="Als JSON senden" Value="0" />
+                            </Union>
                         </Parameters>
 
                         <ParameterRefs>
@@ -60,11 +78,21 @@
                             <ParameterRef Id="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" RefId="%AID%_UP-%TT%%CC%041" />
                             <ParameterRef Id="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" RefId="%AID%_UP-%TT%%CC%042" />
                             <ParameterRef Id="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" RefId="%AID%_UP-%TT%%CC%043" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_UP-%TT%%CC%051" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" RefId="%AID%_UP-%TT%%CC%052" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%053_R-%TT%%CC%05301" RefId="%AID%_UP-%TT%%CC%053" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001" RefId="%AID%_UP-%TT%%CC%060" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101" RefId="%AID%_UP-%TT%%CC%061" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%062_R-%TT%%CC%06201" RefId="%AID%_UP-%TT%%CC%062" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%063_R-%TT%%CC%06301" RefId="%AID%_UP-%TT%%CC%063" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401" RefId="%AID%_UP-%TT%%CC%064" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" RefId="%AID%_UP-%TT%%CC%065" />
                         </ParameterRefs>
 
                         <ComObjectTable>
-                            <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K00%" Name="CH%C%Trigger" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Disabled" WriteFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="1 Bit" DatapointType="DPST-1-17" />
-                            <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K01%" Name="CH%C%Status" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Enabled" WriteFlag="Disabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="2 Bytes" DatapointType="DPT-7" />
+                            <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K00%" Name="CH%C%In" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Disabled" WriteFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="4 Bytes" DatapointType="DPT-12" />
+                            <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K01%" Name="CH%C%Out" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Enabled" WriteFlag="Disabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="4 Bytes" DatapointType="DPT-12" />
                         </ComObjectTable>
 
                         <ComObjectRefs>
@@ -79,6 +107,28 @@
                             <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00003" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Bit" DatapointType="DPST-1-17" Text="{{0:NetBridge %C%}}: Webhook senden Trigger" FunctionText="NetBridge %C%: Eingang, Trigger" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
                             <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00103" RefId="%AID%_O-%TT%%CC%001" ObjectSize="1 Bit" DatapointType="DPST-1-11" Text="{{0:NetBridge %C%}}: Webhook senden Status" FunctionText="NetBridge %C%: Ausgang, 200=true / sonst false" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
                             <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00104" RefId="%AID%_O-%TT%%CC%001" ObjectSize="2 Bytes" DatapointType="DPT-7" Text="{{0:NetBridge %C%}}: Webhook senden Response-Code" FunctionText="NetBridge %C%: Ausgang, HTTP-Statuscode (0=Fehler)" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <!-- MQTT empfangen — Ausgabe auf K01 -->
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00105" RefId="%AID%_O-%TT%%CC%001" ObjectSize="1 Bit"  DatapointType="DPST-1-2"    Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00106" RefId="%AID%_O-%TT%%CC%001" ObjectSize="1 Byte" DatapointType="DPT-5"    Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00107" RefId="%AID%_O-%TT%%CC%001" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00108" RefId="%AID%_O-%TT%%CC%001" ObjectSize="1 Byte" DatapointType="DPT-6"    Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00109" RefId="%AID%_O-%TT%%CC%001" ObjectSize="2 Bytes" DatapointType="DPT-7"    Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00110" RefId="%AID%_O-%TT%%CC%001" ObjectSize="2 Bytes" DatapointType="DPT-8"    Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00111" RefId="%AID%_O-%TT%%CC%001" ObjectSize="2 Bytes" DatapointType="DPT-9"    Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00112" RefId="%AID%_O-%TT%%CC%001" ObjectSize="4 Bytes" DatapointType="DPT-12"   Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00113" RefId="%AID%_O-%TT%%CC%001" ObjectSize="4 Bytes" DatapointType="DPT-13"   Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00114" RefId="%AID%_O-%TT%%CC%001" ObjectSize="4 Bytes" DatapointType="DPT-14"   Text="{{0:NetBridge %C%}}: MQTT empfangen" FunctionText="NetBridge %C%: Ausgang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
+                            <!-- MQTT senden — Eingabe auf K00 -->
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00004" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Bit"  DatapointType="DPST-1-2"    Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00005" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Byte" DatapointType="DPT-5"    Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00006" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00007" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Byte" DatapointType="DPT-6"    Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00008" RefId="%AID%_O-%TT%%CC%000" ObjectSize="2 Bytes" DatapointType="DPT-7"    Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00009" RefId="%AID%_O-%TT%%CC%000" ObjectSize="2 Bytes" DatapointType="DPT-8"    Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" RefId="%AID%_O-%TT%%CC%000" ObjectSize="2 Bytes" DatapointType="DPT-9"    Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00011" RefId="%AID%_O-%TT%%CC%000" ObjectSize="4 Bytes" DatapointType="DPT-12"   Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00012" RefId="%AID%_O-%TT%%CC%000" ObjectSize="4 Bytes" DatapointType="DPT-13"   Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00013" RefId="%AID%_O-%TT%%CC%000" ObjectSize="4 Bytes" DatapointType="DPT-14"   Text="{{0:NetBridge %C%}}: MQTT senden" FunctionText="NetBridge %C%: Eingang, MQTT Wert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
                         </ComObjectRefs>
                     </Static>
 
@@ -199,6 +249,68 @@
                                                         <when test="2">
                                                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00104" />
                                                         </when>
+                                                    </choose>
+                                                </ParameterBlock>
+                                            </when>
+                                            <when test="5">
+                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_MqttIn" Text="Kanal %C% MQTT In: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="message-arrow-left-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttIn">
+                                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="MQTT empfangen" UIHint="Headline" />
+                                                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
+
+                                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" IndentLevel="1" HelpContext="NTB-MqttIn-Topic" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" IndentLevel="1" HelpContext="NTB-MqttIn-Dpt" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" IndentLevel="1" HelpContext="NTB-MqttIn-Json" />
+                                                    <choose ParamRefId="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201">
+                                                        <when test="1">
+                                                            <ParameterRefRef RefId="%AID%_UP-%TT%%CC%053_R-%TT%%CC%05301" IndentLevel="1" HelpContext="NTB-MqttIn-Json" />
+                                                        </when>
+                                                    </choose>
+
+                                                    <choose ParamRefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101">
+                                                        <when test="0"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00105" /></when>
+                                                        <when test="1"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00106" /></when>
+                                                        <when test="2"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00107" /></when>
+                                                        <when test="3"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00108" /></when>
+                                                        <when test="4"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00109" /></when>
+                                                        <when test="5"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00110" /></when>
+                                                        <when test="6"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00111" /></when>
+                                                        <when test="7"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00112" /></when>
+                                                        <when test="8"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00113" /></when>
+                                                        <when test="9"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00114" /></when>
+                                                    </choose>
+                                                </ParameterBlock>
+                                            </when>
+                                            <when test="6">
+                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_MqttOut" Text="Kanal %C% MQTT Out: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="message-arrow-right-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttOut">
+                                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="MQTT senden" UIHint="Headline" />
+                                                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
+
+                                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001" IndentLevel="1" HelpContext="NTB-MqttOut-Topic" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101" IndentLevel="1" HelpContext="NTB-MqttOut-Dpt" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%062_R-%TT%%CC%06201" IndentLevel="1" HelpContext="NTB-MqttOut-Qos" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%063_R-%TT%%CC%06301" IndentLevel="1" HelpContext="NTB-MqttOut-Retain" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401" IndentLevel="1" HelpContext="NTB-MqttOut-DevicePrefix" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%065_R-%TT%%CC%06501" IndentLevel="1" HelpContext="NTB-MqttOut-AsJson" />
+
+                                                    <choose ParamRefId="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101">
+                                                        <when test="0"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00004" /></when>
+                                                        <when test="1"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00005" /></when>
+                                                        <when test="2"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00006" /></when>
+                                                        <when test="3"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00007" /></when>
+                                                        <when test="4"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00008" /></when>
+                                                        <when test="5"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00009" /></when>
+                                                        <when test="6"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00010" /></when>
+                                                        <when test="7"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00011" /></when>
+                                                        <when test="8"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00012" /></when>
+                                                        <when test="9"><ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00013" /></when>
                                                     </choose>
                                                 </ParameterBlock>
                                             </when>

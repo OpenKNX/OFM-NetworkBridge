@@ -1,5 +1,5 @@
 ﻿### Typ
 
 Bestimmt die Funktion des Kanals.
-Verfügbare Typen: `Ping`, `Wake on LAN`, `Webhook empfangen`, `Webhook senden`.
+Verfügbare Typen: `Ping`, `Wake on LAN`, `Webhook empfangen`, `Webhook senden`, `MQTT empfangen`, `MQTT senden`.
 

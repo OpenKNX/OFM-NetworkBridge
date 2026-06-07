@@ -6,3 +6,4 @@ Legt den MIME-Typ des Requests fest.
 - **Plain**: `text/plain`
 - **XML**: `application/xml`
 - **JSON**: `application/json`
+

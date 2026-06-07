@@ -3,6 +3,8 @@
 #include "NetworkBridge/WakeOnLanFunction.h"
 #include "NetworkBridge/WebhookInFunction.h"
 #include "NetworkBridge/WebhookOutFunction.h"
+#include "NetworkBridge/MqttInFunction.h"
+#include "NetworkBridge/MqttOutFunction.h"
 #include "knxprod.h"
 
 const std::string NetworkBridgeModule::version()
@@ -41,6 +43,10 @@ OpenKNX::Channel* NetworkBridgeModule::createChannel(uint8_t _channelIndex /* th
             return new WebhookInFunction(_channelIndex);
         case 4:
             return new WebhookOutFunction(_channelIndex);
+        case 5:
+            return new MqttInFunction(_channelIndex);
+        case 6:
+            return new MqttOutFunction(_channelIndex);
         default:
             logErrorP("NTB channel %d has unknown type %d", _channelIndex, ParamNTB_CHChannelType);
             return nullptr;
