@@ -21,6 +21,12 @@
                             <ParameterType Id="%AID%_PT-NTBHostAddress" Name="NTBHostAddress">
                                 <TypeIPAddress AddressType="HostAddress" />
                             </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBPingRetries" Name="NTBPingRetries">
+                                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="10" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBPingTimeout" Name="NTBPingTimeout">
+                                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="100" maxInclusive="10000" />
+                            </ParameterType>
                         </ParameterTypes>
                         <Parameters>
                             <Union SizeInBit="8">

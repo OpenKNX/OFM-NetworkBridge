@@ -18,13 +18,6 @@ void PingFunction::setup()
         static_cast<uint8_t>((targetRaw >> 16) & 0xFF),
         static_cast<uint8_t>((targetRaw >> 8) & 0xFF),
         static_cast<uint8_t>(targetRaw & 0xFF));
-
-    _automaticPing = ParamNTB_CHPingAutomatic;
-    KoNTB_CHPingStatus.value(false, DPT_Alarm);
-    if (_automaticPing)
-    {
-        triggerPing(false);
-    }
 }
 
 void PingFunction::readInputKos()
@@ -40,16 +33,15 @@ void PingFunction::initMissingInputValues()
 void PingFunction::processInputKo(GroupObject &ko)
 {
     auto index = NTB_KoCalcIndex(ko.asap());
-    if (index == NTB_KoCHPingTrigger && ko.value(DPT_Trigger))
+    if (index == NTB_KoCHPingTrigger && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
     {
-        triggerPing(true);
+        triggerPing();
     }
 }
 
-
 void PingFunction::loop()
 {
-    if (!_automaticPing || _pingRunning)
+    if (!ParamNTB_CHPingAutomatic || _pingRunning || !openknx.afterStartupDelay())
     {
         return;
     }
@@ -57,7 +49,7 @@ void PingFunction::loop()
     unsigned long now = millis();
     if (_startTimeStampForNextPing == 0 || now - _startTimeStampForNextPing >= pingIntervalMs())
     {
-        triggerPing(false);
+        triggerPing();
     }
 }
 
@@ -72,50 +64,26 @@ void PingFunction::scheduleNextAutomaticPing()
     _startTimeStampForNextPing = max(1ul, millis());
 }
 
-void PingFunction::triggerPing(bool manualTrigger)
+void PingFunction::onPingResult(IPAddress ip, bool reachable)
 {
-    _automaticPing = ParamNTB_CHPingAutomatic;
+    logDebugP("Ping callback for %s: %s", ip.toString().c_str(), reachable ? "reachable" : "unreachable");
+    _pingRunning = false;
+    KoNTB_CHPingStatus.value(reachable, DPT_Alarm);
+    if (ParamNTB_CHPingAutomatic)
+        scheduleNextAutomaticPing();
+}
+
+void PingFunction::triggerPing()
+{
     if (_pingRunning)
     {
         return;
     }
 
-    if (!_automaticPing && manualTrigger)
-    {
-        // Manual mode: clear status immediately on each trigger.
-        KoNTB_CHPingStatus.value(false, DPT_Alarm);
-    }
-
 #ifdef OPENKNX_PING
     _pingRunning = true;
-    logDebugP("Ping triggered (%s) to %s", manualTrigger ? "manual" : "automatic", _targetAddress.toString().c_str());
-    openknxNetwork.ping(_targetAddress,
-        [this, manualTrigger](IPAddress ip, bool reachable) {
-            logDebugP("Ping callback for %s: %s", ip.toString().c_str(), reachable ? "reachable" : "unreachable");  
-            _pingRunning = false;
-            if (!manualTrigger)
-            {
-                bool changed = KoNTB_CHPingStatus.valueCompare(reachable, DPT_Alarm);
-                if (changed)
-                {
-                    logDebugP("Auto ping status changed for %s: %s", ip.toString().c_str(), reachable ? "reachable" : "unreachable");
-                }
-                scheduleNextAutomaticPing();
-            }
-            else
-            {
-                KoNTB_CHPingStatus.value(reachable, DPT_Alarm);
-                logDebugP("Manual ping result for %s: %s", ip.toString().c_str(), reachable ? "reachable" : "unreachable");
-            }
-        },
-        manualTrigger ? 0 : 2);
-#else
-    // If OPENKNX_PING is not available, report failure state.
-    KoNTB_CHPingStatus.value(false, DPT_Alarm);
-    _pingRunning = false;
-    if (_automaticPing)
-    {
-        scheduleNextAutomaticPing();
-    }
+    logDebugP("Ping triggered to %s", _targetAddress.toString().c_str());
+    openknxNetwork.ping(_targetAddress, [this](IPAddress ip, bool reachable)
+                        { onPingResult(ip, reachable); }, ParamNTB_CHPingRetries, ParamNTB_CHPingTimeout);
 #endif
 }

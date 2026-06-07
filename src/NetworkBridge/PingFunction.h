@@ -14,12 +14,12 @@ public:
     void loop() override;
 
 private:
-    bool _automaticPing = false;
     bool _pingRunning = false;
     IPAddress _targetAddress;
     unsigned long _startTimeStampForNextPing = 0;
 
     unsigned long pingIntervalMs() const;
-    void triggerPing(bool manualTrigger);
+    void triggerPing();
+    void onPingResult(IPAddress ip, bool reachable);
     void scheduleNextAutomaticPing();
 };

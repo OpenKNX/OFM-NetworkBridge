@@ -57,3 +57,16 @@ Wählt die Zeiteinheit für das automatische Ping-Intervall.
 ### Intervall Zeit
 
 Definiert die Intervalllänge für den automatischen Ping in der ausgewählten Zeitbasis.
+
+<!-- DOC HelpContext="Ping-Wiederholungen" -->
+### Wiederholungen
+
+Anzahl der Wiederholungsversuche, wenn ein Ping keine Antwort erhält (0 = kein Wiederholungsversuch).
+Standardwert: 2
+
+<!-- DOC HelpContext="Ping-Timeout" -->
+### Timeout (ms)
+
+Maximale Wartezeit in Millisekunden auf eine Ping-Antwort pro Versuch.
+Nach Ablauf dieser Zeit gilt der Versuch als fehlgeschlagen und es wird ggf. ein Wiederholungsversuch gestartet.
+Standardwert: 1000 ms

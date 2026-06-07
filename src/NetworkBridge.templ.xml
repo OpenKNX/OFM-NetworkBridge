@@ -15,12 +15,14 @@
                                 <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%ChannelDisabled" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="0" Text="Kanal deaktivieren (Test)" Value="0" />
                             </Union>
 
-                            <Union SizeInBit="64">
+                            <Union SizeInBit="80">
                                 <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%PingAutomatic" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Automatischer Ping" Value="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%PingIntervalDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Intervall Zeitbasis" Value="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%PingIntervalDelayTime" ParameterType="%AID%_PT-DelayTimeMin1" Offset="2" BitOffset="2" Text="Intervall Zeit" Value="60" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%PingTargetAddress" ParameterType="%AID%_PT-NTBHostAddress" Offset="4" BitOffset="0" Text="Ziel IP-Adresse" Value="8.8.8.8" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%014" Name="CH%C%PingRetries" ParameterType="%AID%_PT-NTBPingRetries" Offset="1" BitOffset="0" Text="Wiederholungen" Value="2" />
+                                <Parameter Id="%AID%_UP-%TT%%CC%015" Name="CH%C%PingTimeout" ParameterType="%AID%_PT-NTBPingTimeout" Offset="8" BitOffset="0" Text="Timeout (ms)" Value="1000" />
                             </Union>
                         </Parameters>
 
@@ -32,6 +34,8 @@
                             <ParameterRef Id="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_UP-%TT%%CC%011" />
                             <ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
                             <ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_UP-%TT%%CC%014" />
+                            <ParameterRef Id="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_UP-%TT%%CC%015" />
                         </ParameterRefs>
 
                         <ComObjectTable>
@@ -86,24 +90,28 @@
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
                                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" IndentLevel="1" HelpContext="NTB-Ping-Ziel-IP-Adresse" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" IndentLevel="1" HelpContext="NTB-Ping-Automatisch" />
-                                                    <choose ParamRefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001">
-                                                        <when test="1">
-                                                            <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%NBPingInterval" Inline="true" Layout="Grid" HelpContext="NTB-Ping-Intervall-Zeit">
-                                                                <Rows>
-                                                                    <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
-                                                                </Rows>
-                                                                <Columns>
-                                                                    <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="45%" />
-                                                                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="15%" />
-                                                                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="25%" />
-                                                                </Columns>
-                                                                <ParameterSeparator Id="%AID%_PS-nnn" Text="  Intervall" Cell="1,1" />
-                                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" IndentLevel="2" Cell="1,2" HelpContext="NTB-Ping-Intervall-Zeit" />
-                                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" IndentLevel="2" Cell="1,3" HelpContext="NTB-Ping-Intervall-Zeitbasis" />
-                                                            </ParameterBlock>
-                                                        </when>
-                                                    </choose>
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" IndentLevel="1" HelpContext="NTB-Ping-Wiederholungen" />
+                                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" IndentLevel="1" HelpContext="NTB-Ping-Timeout" />
+                                                    <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%NBPingAutomatic" Inline="true" Layout="Grid" HelpContext="NTB-Ping-Automatisch">
+                                                        <Rows>
+                                                            <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                                                        </Rows>
+                                                        <Columns>
+                                                            <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="46%" />
+                                                            <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="5%" />
+                                                            <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="15%" />
+                                                            <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="25%" />
+                                                        </Columns>
+                                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="  Automatischer Ping" Cell="1,1" />
+                                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" IndentLevel="1" Cell="1,2" HelpContext="NTB-Ping-Automatisch" />
+                                                        <choose ParamRefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001">
+                                                            <when test="1">
+
+                                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" IndentLevel="2" Cell="1,3" HelpContext="NTB-Ping-Intervall-Zeit" />
+                                                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" IndentLevel="2" Cell="1,4" HelpContext="NTB-Ping-Intervall-Zeitbasis" />
+                                                            </when>
+                                                        </choose>
+                                                    </ParameterBlock>
 
                                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
                                                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
