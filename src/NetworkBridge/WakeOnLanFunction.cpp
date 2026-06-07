@@ -26,7 +26,7 @@ void WakeOnLanFunction::initMissingInputValues()
 void WakeOnLanFunction::processInputKo(GroupObject &ko)
 {
     auto index = NTB_KoCalcIndex(ko.asap());
-    if (index == NTB_KoCHWolTrigger && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
+    if (index == NTB_KoCHPingTrigger && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
     {
         sendMagicPacket();
     }

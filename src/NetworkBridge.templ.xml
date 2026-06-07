@@ -15,7 +15,7 @@
                                 <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%ChannelDisabled" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="0" Text="Kanal deaktivieren (Test)" Value="0" />
                             </Union>
 
-                            <Union SizeInBit="80">
+                            <Union SizeInBit="800" op:nowarn="true">
                                 <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%PingAutomatic" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Automatischer Ping" Value="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%PingIntervalDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Intervall Zeitbasis" Value="0" />
@@ -25,7 +25,7 @@
                                 <Parameter Id="%AID%_UP-%TT%%CC%015" Name="CH%C%PingTimeout" ParameterType="%AID%_PT-NTBPingTimeout" Offset="8" BitOffset="0" Text="Timeout (ms)" Value="1000" />
                             </Union>
 
-                            <Union SizeInBit="136">
+                            <Union SizeInBit="800" op:nowarn="true">
                                 <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
                                 <Parameter Id="%AID%_UP-%TT%%CC%020" Name="CH%C%WolMacAddress" ParameterType="%AID%_PT-NTBMacAddress" Offset="0" BitOffset="0" Text="MAC-Adresse" Value="00:00:00:00:00:00" />
                             </Union>
@@ -47,13 +47,12 @@
                         <ComObjectTable>
                             <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K00%" Name="CH%C%PingTrigger" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Disabled" WriteFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="1 Bit" DatapointType="DPST-1-17" />
                             <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K01%" Name="CH%C%PingStatus" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Enabled" WriteFlag="Disabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="1 Bit" DatapointType="DPST-1-11" />
-                            <ComObject Id="%AID%_O-%TT%%CC%002" Number="%K02%" Name="CH%C%WolTrigger" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Disabled" WriteFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="1 Bit" DatapointType="DPST-1-17" />
                         </ComObjectTable>
 
                         <ComObjectRefs>
                             <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Bit" DatapointType="DPST-1-17" Text="{{0:NetBridge %C%}}: Ping Trigger" FunctionText="NetBridge %C%: Eingang, Trigger" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
                             <ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_O-%TT%%CC%001" ObjectSize="1 Bit" DatapointType="DPST-1-11" Text="{{0:NetBridge %C%}}: Ping Status" FunctionText="NetBridge %C%: Ausgang, Status, unerreichbar=0 / erreichbar=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" ReadFlag="Enabled" TransmitFlag="Enabled" />
-                            <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" ObjectSize="1 Bit" DatapointType="DPST-1-17" Text="{{0:NetBridge %C%}}: WOL Trigger" FunctionText="NetBridge %C%: Eingang, Trigger" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
+                            <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00002" RefId="%AID%_O-%TT%%CC%000" ObjectSize="1 Bit" DatapointType="DPST-1-17" Text="{{0:NetBridge %C%}}: WOL Trigger" FunctionText="NetBridge %C%: Eingang, Trigger" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" WriteFlag="Enabled" />
                         </ComObjectRefs>
                     </Static>
 
@@ -135,7 +134,7 @@
 
                                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" IndentLevel="1" HelpContext="NTB-WOL-MAC-Adresse" />
 
-                                                    <ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
+                                                    <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00002" />
                                                 </ParameterBlock>
                                             </when>
                                         </choose>
