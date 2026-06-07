@@ -17,6 +17,8 @@
                                     <Enumeration Id="%ENID%" Value="0" Text="Deaktiviert" />
                                     <Enumeration Id="%ENID%" Value="1" Text="Ping" />
                                     <Enumeration Id="%ENID%" Value="2" Text="Wake on LAN" />
+                                    <Enumeration Id="%ENID%" Value="3" Text="Webhook empfangen" />
+                                    <Enumeration Id="%ENID%" Value="4" Text="Webhook senden" />
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBHostAddress" Name="NTBHostAddress">
@@ -30,6 +32,33 @@
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBMacAddress" Name="NTBMacAddress">
                                 <TypeText SizeInBit="136" Pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBWebhookPath" Name="NTBWebhookPath">
+                                <TypeText SizeInBit="512" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBWebhookUrl" Name="NTBWebhookUrl">
+                                <TypeText SizeInBit="768" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBWebhookOutStatusMode" Name="NTBWebhookOutStatusMode">
+                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                    <Enumeration Id="%ENID%" Value="0" Text="Aus" />
+                                    <Enumeration Id="%ENID%" Value="1" Text="Status" />
+                                    <Enumeration Id="%ENID%" Value="2" Text="Response-Code" />
+                                </TypeRestriction>
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBWebhookOutMethod" Name="NTBWebhookOutMethod">
+                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                    <Enumeration Id="%ENID%" Value="0" Text="GET" />
+                                    <Enumeration Id="%ENID%" Value="1" Text="POST" />
+                                </TypeRestriction>
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBWebhookOutContentType" Name="NTBWebhookOutContentType">
+                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                    <Enumeration Id="%ENID%" Value="0" Text="HTML" />
+                                    <Enumeration Id="%ENID%" Value="1" Text="Plain" />
+                                    <Enumeration Id="%ENID%" Value="2" Text="XML" />
+                                    <Enumeration Id="%ENID%" Value="3" Text="JSON" />
+                                </TypeRestriction>
                             </ParameterType>
                         </ParameterTypes>
                         <Parameters>
@@ -52,9 +81,9 @@
                         </Script>
                     </Static>
                     <Dynamic>
-                        <Channel Name="MainChannel%TT%" Text="Network Bridge" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="table-network" HelpContext="NTB-Dokumentation">
+                        <Channel Name="MainChannel%TT%" Text="Netzwerkbrücke" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="bridge" HelpContext="NTB-Dokumentation">
                             <ParameterBlock Id="%AID%_PB-nnn" Name="NTBSettings" Text="Allgemein" Icon="cog-outline" HelpContext="NTB-Dokumentation">
-                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Network Bridge" UIHint="Headline" />
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Netzwerkbrücke" UIHint="Headline" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />

@@ -33,7 +33,7 @@ void PingFunction::initMissingInputValues()
 void PingFunction::processInputKo(GroupObject &ko)
 {
     auto index = NTB_KoCalcIndex(ko.asap());
-    if (index == NTB_KoCHPingTrigger && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
+    if (index == NTB_KoCHTrigger && ko.value(DPT_Trigger) && openknx.afterStartupDelay())
     {
         triggerPing();
     }
@@ -68,7 +68,7 @@ void PingFunction::onPingResult(IPAddress ip, bool reachable)
 {
     logDebugP("Ping callback for %s: %s", ip.toString().c_str(), reachable ? "reachable" : "unreachable");
     _pingRunning = false;
-    KoNTB_CHPingStatus.value(reachable, DPT_Alarm);
+    KoNTB_CHStatus.value(reachable, DPT_Alarm);
     if (ParamNTB_CHPingAutomatic)
         scheduleNextAutomaticPing();
 }
