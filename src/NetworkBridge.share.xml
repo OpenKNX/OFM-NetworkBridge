@@ -16,6 +16,7 @@
                                 <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
                                     <Enumeration Id="%ENID%" Value="0" Text="Deaktiviert" />
                                     <Enumeration Id="%ENID%" Value="1" Text="Ping" />
+                                    <Enumeration Id="%ENID%" Value="2" Text="Wake on LAN" />
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBHostAddress" Name="NTBHostAddress">
@@ -26,6 +27,9 @@
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBPingTimeout" Name="NTBPingTimeout">
                                 <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="100" maxInclusive="10000" />
+                            </ParameterType>
+                            <ParameterType Id="%AID%_PT-NTBMacAddress" Name="NTBMacAddress">
+                                <TypeText SizeInBit="136" Pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" />
                             </ParameterType>
                         </ParameterTypes>
                         <Parameters>

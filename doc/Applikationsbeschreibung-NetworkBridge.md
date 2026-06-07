@@ -58,6 +58,18 @@ Wählt die Zeiteinheit für das automatische Ping-Intervall.
 
 Definiert die Intervalllänge für den automatischen Ping in der ausgewählten Zeitbasis.
 
+<!-- DOC HelpContext="WOL" -->
+## Wake on LAN
+
+Konfiguration des Kanaltyps `Wake on LAN`.
+Der Kanal sendet beim Empfang eines Triggers ein Magic Packet per UDP-Broadcast an das Netzwerk, um ein Gerät per Wake on LAN aufzuwecken.
+
+<!-- DOC HelpContext="WOL-MAC-Adresse" -->
+### MAC-Adresse
+
+MAC-Adresse des Zielgeräts im Format `AA:BB:CC:DD:EE:FF`.
+Das Magic Packet wird an diese Adresse adressiert und per Broadcast versandt.
+
 <!-- DOC HelpContext="Ping-Wiederholungen" -->
 ### Wiederholungen
 

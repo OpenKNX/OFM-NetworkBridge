@@ -1,5 +1,6 @@
 #include "NetworkBridgeModule.h"
 #include "NetworkBridge/PingFunction.h"
+#include "NetworkBridge/WakeOnLanFunction.h"
 #include "knxprod.h"
 
 const std::string NetworkBridgeModule::version()
@@ -32,6 +33,8 @@ OpenKNX::Channel* NetworkBridgeModule::createChannel(uint8_t _channelIndex /* th
             return nullptr;
         case 1:
             return new PingFunction(_channelIndex);
+        case 2:
+            return new WakeOnLanFunction(_channelIndex);
         default:
             logErrorP("NTB channel %d has unknown type %d", _channelIndex, ParamNTB_CHChannelType);
             return nullptr;
