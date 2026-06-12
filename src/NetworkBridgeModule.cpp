@@ -21,6 +21,9 @@ void NetworkBridgeModule::setup(bool configured)
     Module::setup(configured);
     NTBChannelOwnerModule::initialize(configured ? ParamNTB_VisibleChannels : 0);
     NTBChannelOwnerModule::setup(configured);
+#ifdef OPENKNX_WEBSERVER
+    _configPage.setup();
+#endif
 }
 
 OpenKNX::Channel* NetworkBridgeModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)

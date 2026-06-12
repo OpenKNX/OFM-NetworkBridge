@@ -10,17 +10,8 @@ WakeOnLanFunction::WakeOnLanFunction(uint8_t channelIndex)
 void WakeOnLanFunction::setup()
 {
     OpenKNX::Channel::setup();
-    readInputKos();
     if (parseMac(reinterpret_cast<const char*>(ParamNTB_CHWolMacAddress)))
         buildPacket();
-}
-
-void WakeOnLanFunction::readInputKos()
-{
-}
-
-void WakeOnLanFunction::initMissingInputValues()
-{
 }
 
 void WakeOnLanFunction::processInputKo(GroupObject &ko)

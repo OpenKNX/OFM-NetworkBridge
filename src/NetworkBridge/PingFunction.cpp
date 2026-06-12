@@ -10,7 +10,6 @@ PingFunction::PingFunction(uint8_t channelIndex)
 void PingFunction::setup()
 {
     OpenKNX::Channel::setup();
-    readInputKos();
 
     uint32_t targetRaw = ParamNTB_CHPingTargetAddress;
     _targetAddress = IPAddress(
@@ -18,16 +17,6 @@ void PingFunction::setup()
         static_cast<uint8_t>((targetRaw >> 16) & 0xFF),
         static_cast<uint8_t>((targetRaw >> 8) & 0xFF),
         static_cast<uint8_t>(targetRaw & 0xFF));
-}
-
-void PingFunction::readInputKos()
-{
-    // Inputs are handled via processInputKo/handleKo.
-}
-
-void PingFunction::initMissingInputValues()
-{
-    // No additional startup initialization required.
 }
 
 void PingFunction::processInputKo(GroupObject &ko)

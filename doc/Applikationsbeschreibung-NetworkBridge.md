@@ -99,7 +99,7 @@ Der Kanal registriert einen HTTP-GET-Endpunkt unter `/webhook/<Pfad>`. Sobald ei
 <!-- DOC HelpContext="WebhookIn-Pfad" -->
 ### Pfad
 
-Pfad des Webhook-Endpunkts (ohne führenden Slash).
+Pfad des Webhook-Endpunkts (ohne führenden Slash), maximal 50 Zeichen.
 Der vollständige Endpunkt lautet `/webhook/<Pfad>`.
 
 Beispiel: `licht-an` → erreichbar unter `http://<Geräte-IP>/webhook/licht-an`
@@ -113,9 +113,12 @@ Der Kanal ruft beim Empfang eines KNX-Triggers eine konfigurierte URL per HTTP-G
 <!-- DOC HelpContext="WebhookOut-URL" -->
 ### URL
 
-Ziel-URL, die per GET oder POST abgerufen wird, sobald ein Trigger empfangen wird.
+Ziel-URL, die per GET oder POST abgerufen wird, sobald ein Trigger empfangen wird. Das ETS-Feld ist auf 50 Zeichen begrenzt.
 
 Beispiel: `http://192.168.1.10/api/action`
+
+Für längere URLs kann die Datei `/ntb/<Kanalnummer>.url.txt` auf dem Dateisystem angelegt werden.
+Ist diese Datei vorhanden, wird ihr Inhalt als URL verwendet und das ETS-Feld ignoriert.
 
 <!-- DOC HelpContext="WebhookOut-Statusmodus" -->
 ### Status
@@ -132,7 +135,10 @@ Legt fest, ob und wie das Ergebnis des HTTP-Requests als KNX-Wert ausgegeben wir
 Legt fest, ob der Request als GET oder POST gesendet wird.
 
 - **GET**: Einfacher Abruf der URL ohne Body.
-- **POST**: Sendet einen Body aus der Datei `/webhook/<Kanalnummer>.txt` auf dem internen Dateisystem. Ist die Datei nicht vorhanden, wird ein leerer Body gesendet.
+- **POST**: Sendet einen Body aus der Datei `/ntb/<Kanalnummer>.body.txt` auf dem internen Dateisystem. Ist die Datei nicht vorhanden, wird ein leerer Body gesendet.
+
+Zusätzliche HTTP-Header können über die Datei `/ntb/<Kanalnummer>.header.txt` definiert werden.
+Format: eine Zeile pro Header, `Schlüssel: Wert`. Die Datei ist optional; ohne sie werden keine zusätzlichen Header gesendet.
 
 <!-- DOC HelpContext="WebhookOut-ContentType" -->
 ### Content-Type
@@ -154,11 +160,14 @@ Der Datentyp des Kommunikationsobjekts wird über den Parameter `Datentyp` festg
 <!-- DOC HelpContext="MqttIn-Topic" -->
 ### Topic
 
-MQTT-Topic, das abonniert wird.
+MQTT-Topic, das abonniert wird. Das ETS-Feld ist auf 50 Zeichen begrenzt.
 Wildcards sind erlaubt:
 
 - `+` steht für genau eine Ebene (z. B. `sensoren/+/temperatur`)
 - `#` steht für beliebig viele Ebenen am Ende (z. B. `sensoren/#`)
+
+Für längere Topics kann die Datei `/ntb/<Kanalnummer>.topic.txt` auf dem Dateisystem angelegt werden.
+Ist diese Datei vorhanden, wird ihr Inhalt als Topic verwendet und das ETS-Feld ignoriert.
 
 <!-- DOC HelpContext="MqttIn-Dpt" -->
 ### Datentyp
@@ -180,14 +189,14 @@ Legt fest, wie der empfangene MQTT-Payload in einen KNX-Wert umgewandelt wird.
 ### JSON-Filter
 
 Wenn aktiviert, wird der MQTT-Payload als JSON interpretiert und ein einzelner Wert per Pfad extrahiert.
-Der Pfad folgt dem Standard RFC 6901 (JSON Pointer).
+Der Pfad folgt dem Standard RFC 6901 (JSON Pointer) und wird aus der Datei `/ntb/<Kanalnummer>.select.txt` gelesen.
 
-Beispiele:
+Beispiele für den Dateiinhalt (eine Zeile):
 
-- Payload `{"temp":22.5}`, Pfad `/temp` → Wert `22.5`
-- Payload `{"sensors":[{"val":10}]}`, Pfad `/sensors/0/val` → Wert `10`
+- `/temp` → extrahiert aus `{"temp":22.5}` den Wert `22.5`
+- `/sensors/0/val` → extrahiert aus `{"sensors":[{"val":10}]}` den Wert `10`
 
-Ist die Checkbox deaktiviert, wird der gesamte Payload als Wert verwendet.
+Ist die Checkbox deaktiviert oder die Datei nicht vorhanden, wird der gesamte Payload als Wert verwendet.
 
 <!-- DOC HelpContext="MqttOut" -->
 ## MQTT senden
@@ -198,7 +207,10 @@ Der Kanal veröffentlicht den empfangenen KNX-Wert als MQTT-Nachricht auf dem ko
 <!-- DOC HelpContext="MqttOut-Topic" -->
 ### Topic
 
-MQTT-Topic, auf dem der Wert veröffentlicht wird.
+MQTT-Topic, auf dem der Wert veröffentlicht wird. Das ETS-Feld ist auf 50 Zeichen begrenzt.
+
+Für längere Topics kann die Datei `/ntb/<Kanalnummer>.topic.txt` auf dem Dateisystem angelegt werden.
+Ist diese Datei vorhanden, wird ihr Inhalt als Topic verwendet und das ETS-Feld ignoriert.
 
 <!-- DOC HelpContext="MqttOut-Dpt" -->
 ### Datentyp
@@ -231,3 +243,37 @@ Damit lassen sich mehrere Geräte mit identischen Topics eindeutig unterscheiden
 
 Wenn aktiviert, wird der Wert als JSON-Objekt versendet: `{"value": <Wert>}`.
 Ist die Option deaktiviert, wird der Wert direkt als Zeichenkette gesendet.
+
+## Konfigurationsdateien (`/ntb/`)
+
+Lange Zeichenketten, die nicht in das 50-Byte-ETS-Feld passen, sowie Daten ohne ETS-Fallback werden als Dateien auf dem internen LittleFS-Dateisystem abgelegt.
+Alle Dateien liegen unter `/ntb/` und folgen dem Schema `/ntb/<Kanalnummer>.<Typ>.txt`.
+Die Kanalnummer entspricht dem nullbasierten Kanalindex (Kanal 1 → `0`, Kanal 2 → `1`, usw.).
+
+| Datei | Inhalt | ETS-Fallback |
+|---|---|---|
+| `/ntb/<ch>.url.txt` | URL (WebhookOut) | Ja – ETS-Feld (≤ 50 Zeichen) |
+| `/ntb/<ch>.body.txt` | HTTP-POST-Body (WebhookOut) | Nein – leerer Body |
+| `/ntb/<ch>.header.txt` | Zusätzliche HTTP-Header, Format `Schlüssel: Wert` (eine Zeile pro Header) | Nein – keine zusätzlichen Header |
+| `/ntb/<ch>.topic.txt` | MQTT-Topic (MQTT empfangen + senden) | Ja – ETS-Feld (≤ 50 Zeichen) |
+| `/ntb/<ch>.select.txt` | JSON-Pfad (RFC 6901) für den JSON-Filter (MQTT empfangen) | Nein – gesamter Payload wird verwendet |
+
+**Fallback-Logik:** Ist eine Datei vorhanden, hat sie Vorrang vor dem ETS-Feld.
+Ist sie nicht vorhanden, gilt (sofern vorhanden) der ETS-Wert.
+
+**Hinweis:** Die Dateien können über die Web-Seite **Netzwerkbrücke** (siehe unten), den integrierten Web-Dateimanager oder per KNX-Dateitransfer auf das Gerät übertragen werden. Änderungen werden erst nach einem Neustart oder einem erneuten Kanalaufruf (KO-Trigger) aktiv.
+
+## Web-Konfiguration (`/ntb`)
+
+Erfordert einen aktiven Webserver (Compile-Flag `OPENKNX_WEBSERVER`). Im Web-Menü erscheint der Eintrag **Netzwerkbrücke** (`/ntb`).
+
+Die Seite bietet einen komfortablen Editor für die Konfigurationsdateien unter `/ntb/`, ohne den generischen Dateimanager bemühen zu müssen:
+
+- Über ein **Dropdown** wird genau **ein** Kanal ausgewählt. Es werden nur Kanäle angeboten, die konfiguriert sind **und** bearbeitbare Datei-Felder besitzen (MQTT empfangen/senden, Webhook senden). Inaktive Kanäle sowie Typen ohne Datei-Daten (Ping, Wake on LAN, Webhook empfangen) erscheinen nicht.
+- Für den gewählten Kanal werden **typ-abhängig** die passenden Felder angezeigt und mit dem aktuellen Dateiinhalt vorbefüllt:
+  - **MQTT empfangen**: Topic, JSON-Selektor
+  - **MQTT senden**: Topic
+  - **Webhook senden**: URL, HTTP-Header, POST-Body
+- **Speichern** schreibt den Wert in die zugehörige `/ntb/`-Datei. Ein **leeres Feld** löscht die Datei und stellt damit den ETS-Wert bzw. das Standardverhalten wieder her.
+
+Die Seite verwaltet ausschließlich die `/ntb/`-Dateien; ETS-Parameter selbst sind hier nicht editierbar.

@@ -7,9 +7,8 @@ class PingFunction : public NetworkBridgeFunction
 public:
     explicit PingFunction(uint8_t channelIndex);
 
+    const char* typeName() const override { return "Ping"; }
     void setup() override;
-    void readInputKos() override;
-    void initMissingInputValues() override;
     void processInputKo(GroupObject &ko) override;
     void loop() override;
 

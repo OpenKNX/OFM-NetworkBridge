@@ -1,5 +1,6 @@
 #include "MqttInFunction.h"
 #include "knxprod.h"
+#include <cstring>
 #ifdef OPENKNX_MQTT
     #include "NetworkModule.h"
     #include "OpenKNX/Format/JSON/Reader.h"
@@ -13,26 +14,36 @@ MqttInFunction::MqttInFunction(uint8_t channelIndex)
 void MqttInFunction::setup()
 {
     OpenKNX::Channel::setup();
-    readInputKos();
 #ifdef OPENKNX_MQTT
     _dpt = ParamNTB_CHMqttInDpt;
     _jsonEnabled = ParamNTB_CHMqttInJsonEnabled;
-    if (_jsonEnabled)
-        _jsonPath = reinterpret_cast<const char*>(ParamNTB_CHMqttInJsonPath);
 
-    std::string topic = reinterpret_cast<const char*>(ParamNTB_CHMqttInTopic);
-    if (topic.empty())
+    char topic[128];
+    readChannelFileOrParam("topic", topic, sizeof(topic), reinterpret_cast<const char*>(ParamNTB_CHMqttInTopic));
+    if (topic[0] == '\0')
         return;
 
     openknxNetwork.mqtt.subscribe(topic, [this](const char*, const void* payload, size_t len) {
         char raw[256] = {};
-        if (_jsonEnabled && !_jsonPath.empty()) {
-            char jsonBuf[512] = {};
-            size_t jsonLen = len < 511 ? len : 511;
-            memcpy(jsonBuf, payload, jsonLen);
-            OpenKNX::Format::JSON::Reader r(jsonBuf);
-            r.select(_jsonPath.c_str()).toString(raw, sizeof(raw));
-        } else {
+        if (_jsonEnabled)
+        {
+            char sel[64] = {};
+            if (readChannelFile("select", sel, sizeof(sel)) && sel[0])
+            {
+                char jsonBuf[512] = {};
+                size_t jsonLen = len < 511 ? len : 511;
+                memcpy(jsonBuf, payload, jsonLen);
+                OpenKNX::Format::JSON::Reader r(jsonBuf);
+                r.select(sel).toString(raw, sizeof(raw));
+            }
+            else
+            {
+                size_t copyLen = len < 255 ? len : 255;
+                memcpy(raw, payload, copyLen);
+            }
+        }
+        else
+        {
             size_t copyLen = len < 255 ? len : 255;
             memcpy(raw, payload, copyLen);
         }
@@ -40,13 +51,33 @@ void MqttInFunction::setup()
         _hasPendingValue = true;
     }, 0);
 
-    logDebugP("MQTT subscribed: %s (DPT %d, JSON %s)", topic.c_str(), _dpt, _jsonEnabled ? _jsonPath.c_str() : "off");
+    logDebugP("MQTT subscribed: %s (DPT %d, JSON %s)", topic, _dpt, _jsonEnabled ? "on" : "off");
 #endif
 }
 
-void MqttInFunction::readInputKos() {}
-void MqttInFunction::initMissingInputValues() {}
 void MqttInFunction::processInputKo(GroupObject& /*ko*/) {}
+
+const char* MqttInFunction::fieldEtsValue(uint8_t fieldIndex) const
+{
+    if (fieldIndex == 0)
+    {
+        const char* topic = reinterpret_cast<const char*>(ParamNTB_CHMqttInTopic);
+        // "bridge/test" ist der ETS-Platzhalter-Default → nicht als Wert anzeigen
+        if (topic && topic[0] && strcmp(topic, "bridge/test") != 0)
+            return topic;
+    }
+    return nullptr;
+}
+
+uint8_t MqttInFunction::configFields(const ConfigFileField*& out) const
+{
+    static const ConfigFileField fields[] = {
+        {"topic",  "Topic",         false, "Überschreibt das ETS-Feld (max. 50 Zeichen). Leer lassen = ETS-Wert verwenden."},
+        {"select", "JSON-Selektor", false, "JSON Pointer nach RFC 6901, z. B. /temp oder /sensors/0/val. Leer lassen = gesamter Payload."},
+    };
+    out = fields;
+    return 2;
+}
 
 void MqttInFunction::loop()
 {
