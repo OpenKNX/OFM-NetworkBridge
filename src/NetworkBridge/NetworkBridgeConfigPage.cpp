@@ -59,6 +59,8 @@ namespace
     {
         char path[32];
         NetworkBridgeFunction::channelFilePath(ch, type, path, sizeof(path));
+        if (!LittleFS.exists(path))
+            return "";
         File f = LittleFS.open(path, "r");
         if (!f)
             return "";

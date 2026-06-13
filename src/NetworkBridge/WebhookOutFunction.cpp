@@ -39,6 +39,8 @@ void WebhookOutFunction::processInputKo(GroupObject &ko)
     auto applyHeaders = [this](auto& req) -> auto& {
         char path[32];
         getChannelFilename(path, sizeof(path), "header");
+        if (!LittleFS.exists(path))
+            return req;
         File f = LittleFS.open(path, "r");
         if (!f)
             return req;
