@@ -12,10 +12,10 @@ WebhookInFunction::WebhookInFunction(uint8_t channelIndex)
 void WebhookInFunction::setup()
 {
     OpenKNX::Channel::setup();
-    readInputKos();
 #ifdef OPENKNX_WEBSERVER
-    std::string path = "/webhook/";
-    path += reinterpret_cast<const char*>(ParamNTB_CHWebhookInPath);
+    char path[64];
+    snprintf(path, sizeof(path), "/webhook/%s", reinterpret_cast<const char*>(ParamNTB_CHWebhookInPath));
+
     auto handler = [this](OpenKNX::Network::WebRequest& /*req*/, OpenKNX::Network::WebResponse& res) {
         _triggered = true;
         res.setStatus(200);
@@ -23,12 +23,10 @@ void WebhookInFunction::setup()
     };
     openknxNetwork.webserver.addRoute(OpenKNX::Network::WEB_GET, path, handler);
     openknxNetwork.webserver.addRoute(OpenKNX::Network::WEB_POST, path, handler);
-    logDebugP("Webhook registered: GET+POST %s", path.c_str());
+    logDebugP("Webhook registered: GET+POST %s", path);
 #endif
 }
 
-void WebhookInFunction::readInputKos() {}
-void WebhookInFunction::initMissingInputValues() {}
 void WebhookInFunction::processInputKo(GroupObject& /*ko*/) {}
 
 void WebhookInFunction::loop()

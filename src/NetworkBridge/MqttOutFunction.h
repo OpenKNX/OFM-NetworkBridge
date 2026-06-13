@@ -1,22 +1,14 @@
 #pragma once
 #include "NetworkBridgeFunction.h"
-#include <string>
 
 class MqttOutFunction : public NetworkBridgeFunction
 {
 public:
     explicit MqttOutFunction(uint8_t channelIndex);
+    const char* typeName() const override { return "MQTT senden"; }
     void setup() override;
-    void readInputKos() override;
-    void initMissingInputValues() override;
     void processInputKo(GroupObject& ko) override;
     void loop() override;
-
-private:
-    std::string _topic;
-    uint8_t _dpt = 0;
-    uint8_t _qos = 0;
-    bool _retain = false;
-    bool _devicePrefix = false;
-    bool _asJson = false;
+    uint8_t configFields(const ConfigFileField*& out) const override;
+    const char* fieldEtsValue(uint8_t fieldIndex) const override;
 };

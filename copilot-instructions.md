@@ -6,6 +6,34 @@
 - Channel-basiertes Modul analog OFM-FunctionBlocks
 - Gemeinsame Basisklasse: `NetworkBridgeFunction`
 
+## Versionierungs-Schema (templ.xml)
+
+| Platzhalter | Bedeutung | Einschränkung |
+|-------------|-----------|---------------|
+| `%T%` | ModuleType | **Einstellig (0–9)** |
+| `%CCC%` | Kanal-Nummer (3-stellig) | Ermöglicht mehr als 99 Kanäle |
+| `%C%` | Kanal-Nummer (für Anzeige) | – |
+
+Parameter- und ComObject-IDs folgen dem Schema `%AID%_UP-%T%%CCC%NNN` (`NNN` = dreistellige Nummer im Kanal).
+Standalone `%T%` (ohne `%CCC%`) wird als `%T%0` geschrieben. `%TT%` und `%CC%` entfallen vollständig.
+
+## Filesystem-Fallback-Konvention
+
+ETS-Stringfelder sind auf **50 Byte** begrenzt (`SizeInBit="400"`). Längere Werte und Daten ohne ETS-Feld liegen als `/ntb/<channelIndex>.<typ>.txt` auf LittleFS.
+
+| Typ | Inhalt | ETS-Fallback |
+|-----|--------|--------------|
+| `url` | URL (WebhookOut) | Ja |
+| `body` | HTTP-POST-Body | Nein |
+| `header` | HTTP-Header (`Key: Value`, eine Zeile pro Header) | Nein |
+| `topic` | MQTT-Topic | Ja |
+| `select` | JSON-Selektor (RFC 6901 Pointer) | Nein |
+
+Lesereihenfolge: Datei vorhanden → Datei; sonst ETS-Parameter.
+Helfer `readChannelFile`, `readChannelFileOrParam`, `getChannelFilename` sind in `NetworkBridgeFunction` definiert.
+Abgeleitete Klassen dürfen **keine** `std::string`- oder `char[]`-Member für ETS-/Datei-Strings anlegen — immer on-demand lesen.
+Stack-Buffer für ETS-Strings: immer **Feldlänge + 1** reservieren (z. B. 50-Zeichen-Feld → `char buf[51]`), damit das `\0`-Terminierungszeichen immer Platz hat.
+
 ## Konventionen
 
 1. Kanaltyp-Werte in XML und C++-Factory immer synchron halten.

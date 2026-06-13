@@ -1,5 +1,6 @@
 #include "MqttOutFunction.h"
 #include "knxprod.h"
+#include <cstring>
 #ifdef OPENKNX_MQTT
     #include "NetworkModule.h"
 #endif
@@ -12,20 +13,7 @@ MqttOutFunction::MqttOutFunction(uint8_t channelIndex)
 void MqttOutFunction::setup()
 {
     OpenKNX::Channel::setup();
-    readInputKos();
-#ifdef OPENKNX_MQTT
-    _topic         = reinterpret_cast<const char*>(ParamNTB_CHMqttOutTopic);
-    _dpt           = ParamNTB_CHMqttOutDpt;
-    _qos           = ParamNTB_CHMqttOutQos;
-    _retain        = ParamNTB_CHMqttOutRetain;
-    _devicePrefix  = ParamNTB_CHMqttOutDevicePrefix;
-    _asJson        = ParamNTB_CHMqttOutAsJson;
-    logDebugP("MQTT Out configured: topic=%s DPT=%d QoS=%d retain=%d prefix=%d json=%d", _topic.c_str(), _dpt, _qos, _retain, _devicePrefix, _asJson);
-#endif
 }
-
-void MqttOutFunction::readInputKos() {}
-void MqttOutFunction::initMissingInputValues() {}
 
 void MqttOutFunction::processInputKo(GroupObject& ko)
 {
@@ -34,11 +22,19 @@ void MqttOutFunction::processInputKo(GroupObject& ko)
         return;
 
 #ifdef OPENKNX_MQTT
-    if (_topic.empty())
+    char topic[128];
+    readChannelFileOrParam("topic", topic, sizeof(topic), reinterpret_cast<const char*>(ParamNTB_CHMqttOutTopic));
+    if (topic[0] == '\0')
         return;
 
+    const uint8_t dpt          = ParamNTB_CHMqttOutDpt;
+    const uint8_t qos          = ParamNTB_CHMqttOutQos;
+    const bool    retain       = ParamNTB_CHMqttOutRetain;
+    const bool    devicePrefix = ParamNTB_CHMqttOutDevicePrefix;
+    const bool    asJson       = ParamNTB_CHMqttOutAsJson;
+
     char buf[32] = {};
-    switch (_dpt)
+    switch (dpt)
     {
         case 0: snprintf(buf, sizeof(buf), "%d", (int)(bool)ko.value(Dpt(1, 2))); break;
         case 1: snprintf(buf, sizeof(buf), "%u", (uint8_t)ko.value(Dpt(5, 5))); break;
@@ -54,9 +50,9 @@ void MqttOutFunction::processInputKo(GroupObject& ko)
     }
 
     std::string payload;
-    if (_asJson)
+    if (asJson)
     {
-        const char* jsonVal = (_dpt == 0) ? (buf[0] == '1' ? "true" : "false") : buf;
+        const char* jsonVal = (dpt == 0) ? (buf[0] == '1' ? "true" : "false") : buf;
         payload = std::string("{\"value\":") + jsonVal + "}";
     }
     else
@@ -64,12 +60,33 @@ void MqttOutFunction::processInputKo(GroupObject& ko)
         payload = std::string(buf);
     }
 
-    if (_devicePrefix)
-        openknxNetwork.mqtt.publishP(_topic, payload, _qos, _retain);
+    if (devicePrefix)
+        openknxNetwork.mqtt.publishP(topic, payload, qos, retain);
     else
-        openknxNetwork.mqtt.publish(_topic, payload, _qos, _retain);
-    logDebugP("MQTT published: %s = '%s' (json=%d prefix=%d)", _topic.c_str(), payload.c_str(), _asJson, _devicePrefix);
+        openknxNetwork.mqtt.publish(topic, payload, qos, retain);
+    logDebugP("MQTT published: %s = '%s'", topic, payload.c_str());
 #endif
 }
 
 void MqttOutFunction::loop() {}
+
+const char* MqttOutFunction::fieldEtsValue(uint8_t fieldIndex) const
+{
+    if (fieldIndex == 0)
+    {
+        const char* topic = reinterpret_cast<const char*>(ParamNTB_CHMqttOutTopic);
+        // "bridge/test" ist der ETS-Platzhalter-Default → nicht als Wert anzeigen
+        if (topic && topic[0] && strcmp(topic, "bridge/test") != 0)
+            return topic;
+    }
+    return nullptr;
+}
+
+uint8_t MqttOutFunction::configFields(const ConfigFileField*& out) const
+{
+    static const ConfigFileField fields[] = {
+        {"topic", "Topic", false, "Überschreibt das ETS-Feld (max. 50 Zeichen). Leer lassen = ETS-Wert verwenden."},
+    };
+    out = fields;
+    return 1;
+}

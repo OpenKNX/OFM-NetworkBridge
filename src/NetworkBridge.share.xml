@@ -36,26 +36,26 @@
                                 <TypeText SizeInBit="136" Pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" />
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBWebhookPath" Name="NTBWebhookPath">
-                                <TypeText SizeInBit="512" />
+                                <TypeText SizeInBit="408" />
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBWebhookUrl" Name="NTBWebhookUrl">
-                                <TypeText SizeInBit="768" />
+                                <TypeText SizeInBit="408" />
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBWebhookOutStatusMode" Name="NTBWebhookOutStatusMode">
-                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
                                     <Enumeration Id="%ENID%" Value="0" Text="Aus" />
                                     <Enumeration Id="%ENID%" Value="1" Text="Status" />
                                     <Enumeration Id="%ENID%" Value="2" Text="Response-Code" />
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBWebhookOutMethod" Name="NTBWebhookOutMethod">
-                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                                     <Enumeration Id="%ENID%" Value="0" Text="GET" />
                                     <Enumeration Id="%ENID%" Value="1" Text="POST" />
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBWebhookOutContentType" Name="NTBWebhookOutContentType">
-                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
                                     <Enumeration Id="%ENID%" Value="0" Text="HTML" />
                                     <Enumeration Id="%ENID%" Value="1" Text="Plain" />
                                     <Enumeration Id="%ENID%" Value="2" Text="XML" />
@@ -63,7 +63,7 @@
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBMqttDpt" Name="NTBMqttDpt">
-                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                <TypeRestriction Base="Value" SizeInBit="4" UIHint="DropDown">
                                     <Enumeration Id="%ENID%" Value="0" Text="DPT-1" />
                                     <Enumeration Id="%ENID%" Value="1" Text="DPT-5" />
                                     <Enumeration Id="%ENID%" Value="2" Text="DPT-5 (%)" />
@@ -77,16 +77,13 @@
                                 </TypeRestriction>
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBMqttInTopic" Name="NTBMqttInTopic">
-                                <TypeText SizeInBit="1024" />
-                            </ParameterType>
-                            <ParameterType Id="%AID%_PT-NTBMqttInJsonPath" Name="NTBMqttInJsonPath">
-                                <TypeText SizeInBit="512" />
+                                <TypeText SizeInBit="408" />
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBMqttOutTopic" Name="NTBMqttOutTopic">
-                                <TypeText SizeInBit="1024" />
+                                <TypeText SizeInBit="408" />
                             </ParameterType>
                             <ParameterType Id="%AID%_PT-NTBMqttOutQos" Name="NTBMqttOutQos">
-                                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
                                     <Enumeration Id="%ENID%" Value="0" Text="QoS 0 (At most once)" />
                                     <Enumeration Id="%ENID%" Value="1" Text="QoS 1 (At least once)" />
                                     <Enumeration Id="%ENID%" Value="2" Text="QoS 2 (Exactly once)" />
