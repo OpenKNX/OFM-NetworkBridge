@@ -34,7 +34,7 @@ Bestimmt die Funktion des Kanals.
 Verfügbare Typen: `Ping`, `Wake on LAN`, `Webhook empfangen`, `Webhook senden`, `MQTT empfangen`, `MQTT senden`.
 
 <!-- DOC HelpContext="Kanal-deaktivieren" -->
-### Kanal deaktivieren (Test)
+### Kanal deaktivieren (zu Testzwecken)
 
 Deaktiviert den Kanal für Testzwecke, ohne die restliche Konfiguration zu löschen.
 
