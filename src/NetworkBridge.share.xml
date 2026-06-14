@@ -93,7 +93,7 @@
                         <Parameters>
                             <Union SizeInBit="8">
                                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                                <Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-NTBNumChannels" Offset="0" BitOffset="0" Text="Verfuegbare Kanaele" Value="%NTB_NumChannelsDefault%" SuffixText=" von %N%" />
+                                <Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-NTBNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%NTB_NumChannelsDefault%" SuffixText=" von %N%" />
                             </Union>
                             <Parameter Id="%AID%_P-%TT%00001" Name="AddNotAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="AddNotAllowed" Value="0" Access="None" />
                         </Parameters>
@@ -114,7 +114,11 @@
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
                                 <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="NTB-Verfuegbare-Kanaele" />
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                            </ParameterBlock>
 
+                            <ParameterBlock Id="%AID%_PB-nnn" Name="NTBChannelDefinition" Text="Kanaldefinition" Icon="format-list-bulleted-type" HelpContext="NTB-Dokumentation">
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanaldefinition" UIHint="Headline" />
                                 <op:include href="NetworkBridge.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Settings']/*" type="template" prefix="NTB" IsInner="true" />
                             </ParameterBlock>
 

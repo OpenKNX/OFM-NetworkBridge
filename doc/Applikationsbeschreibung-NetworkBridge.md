@@ -96,6 +96,9 @@ Standardwert: 1000 ms
 Konfiguration des Kanaltyps `Webhook empfangen`.
 Der Kanal registriert einen HTTP-GET-Endpunkt unter `/webhook/<Pfad>`. Sobald ein Request eingeht, wird der KNX-Statusausgang auf `1` gesetzt.
 
+> **Voraussetzung:** Der Webserver muss im Netzwerk-Modul aktiviert sein.
+
+
 <!-- DOC HelpContext="WebhookIn-Pfad" -->
 ### Pfad
 
@@ -157,14 +160,12 @@ Konfiguration des Kanaltyps `MQTT empfangen`.
 Der Kanal abonniert ein MQTT-Topic und schreibt den empfangenen Wert auf ein KNX-Kommunikationsobjekt.
 Der Datentyp des Kommunikationsobjekts wird über den Parameter `Datentyp` festgelegt.
 
+> **Voraussetzung:** MQTT muss im Netzwerk-Modul aktiviert und eingerichtet sein.
+
 <!-- DOC HelpContext="MqttIn-Topic" -->
 ### Topic
 
 MQTT-Topic, das abonniert wird. Das ETS-Feld ist auf 50 Zeichen begrenzt.
-Wildcards sind erlaubt:
-
-- `+` steht für genau eine Ebene (z. B. `sensoren/+/temperatur`)
-- `#` steht für beliebig viele Ebenen am Ende (z. B. `sensoren/#`)
 
 Für längere Topics kann die Datei `/ntb/<Kanalnummer>.topic.txt` auf dem Dateisystem angelegt werden.
 Ist diese Datei vorhanden, wird ihr Inhalt als Topic verwendet und das ETS-Feld ignoriert.
@@ -203,6 +204,8 @@ Ist die Checkbox deaktiviert oder die Datei nicht vorhanden, wird der gesamte Pa
 
 Konfiguration des Kanaltyps `MQTT senden`.
 Der Kanal veröffentlicht den empfangenen KNX-Wert als MQTT-Nachricht auf dem konfigurierten Topic.
+
+> **Voraussetzung:** MQTT muss im Netzwerk-Modul aktiviert und eingerichtet sein.
 
 <!-- DOC HelpContext="MqttOut-Topic" -->
 ### Topic

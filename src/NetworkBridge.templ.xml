@@ -21,14 +21,14 @@
                                 <Parameter Id="%AID%_UP-%T%%CCC%010" Name="CH%C%PingAutomatic" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Automatischer Ping" Value="0" />
                                 <Parameter Id="%AID%_UP-%T%%CCC%011" Name="CH%C%PingIntervalDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Intervall Zeitbasis" Value="0" />
                                 <Parameter Id="%AID%_UP-%T%%CCC%012" Name="CH%C%PingIntervalDelayTime" ParameterType="%AID%_PT-DelayTimeMin1" Offset="2" BitOffset="2" Text="Intervall Zeit" Value="60" />
-                                <Parameter Id="%AID%_UP-%T%%CCC%013" Name="CH%C%PingTargetAddress" ParameterType="%AID%_PT-NTBHostAddress" Offset="4" BitOffset="0" Text="Ziel IP-Adresse" Value="8.8.8.8" />
+                                <Parameter Id="%AID%_UP-%T%%CCC%013" Name="CH%C%PingTargetAddress" ParameterType="%AID%_PT-NTBHostAddress" Offset="4" BitOffset="0" Text="Ziel IP-Adresse" Value="0.0.0.0" />
                                 <Parameter Id="%AID%_UP-%T%%CCC%014" Name="CH%C%PingRetries" ParameterType="%AID%_PT-NTBPingRetries" Offset="1" BitOffset="0" Text="Wiederholungen" Value="2" />
                                 <Parameter Id="%AID%_UP-%T%%CCC%015" Name="CH%C%PingTimeout" ParameterType="%AID%_PT-NTBPingTimeout" Offset="8" BitOffset="0" Text="Timeout (ms)" Value="1000" />
                             </Union>
 
                             <Union SizeInBit="424" op:nowarn="true">
                                 <Memory CodeSegment="%MID%" Offset="2" BitOffset="0" />
-                                <Parameter Id="%AID%_UP-%T%%CCC%020" Name="CH%C%WolMacAddress" ParameterType="%AID%_PT-NTBMacAddress" Offset="0" BitOffset="0" Text="MAC-Adresse" Value="00:00:00:00:00:00" />
+                                <Parameter Id="%AID%_UP-%T%%CCC%020" Name="CH%C%WolMacAddress" ParameterType="%AID%_PT-NTBMacAddress" Offset="0" BitOffset="0" Text="MAC-Adresse" Value="" />
                             </Union>
 
                             <Union SizeInBit="424" op:nowarn="true">
@@ -180,7 +180,6 @@
                                                 <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_Ping" Text="Kanal %C%: {{0:Ping ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="radar" ShowInComObjectTree="true" HelpContext="NTB-Ping">
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Ping" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
 
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -216,7 +215,6 @@
                                                 <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_WOL" Text="Kanal %C%: {{0:WOL ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="upload-network" ShowInComObjectTree="true" HelpContext="NTB-WOL">
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wake on LAN" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
 
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -230,7 +228,6 @@
                                                 <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_WebhookIn" Text="Kanal %C%: {{0:Web In ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="earth-arrow-left" ShowInComObjectTree="true" HelpContext="NTB-WebhookIn">
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Webhook empfangen" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
 
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -244,7 +241,6 @@
                                                 <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_WebhookOut" Text="Kanal %C%: {{0:Web Out ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="earth-arrow-right" ShowInComObjectTree="true" HelpContext="NTB-WebhookOut">
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Webhook senden" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
 
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -268,8 +264,8 @@
                                             <when test="5">
                                                 <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_MqttIn" Text="Kanal %C%: {{0:MQTT In ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="message-arrow-left-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttIn">
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="MQTT empfangen" UIHint="Headline" />
+                                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: MQTT muss im Netzwerk-Modul aktiviert und konfiguriert sein." />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
 
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -295,8 +291,8 @@
                                             <when test="6">
                                                 <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_MqttOut" Text="Kanal %C%: {{0:MQTT Out ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="message-arrow-right-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttOut">
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="MQTT senden" UIHint="Headline" />
+                                                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: MQTT muss im Netzwerk-Modul aktiviert und konfiguriert sein." />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
-                                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" IndentLevel="1" HelpContext="NTB-Kanaltyp" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
 
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
