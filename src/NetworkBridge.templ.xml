@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
     <ManufacturerData>
         <Manufacturer>
@@ -8,7 +8,6 @@
                     <Static>
                         <Parameters>
                             <Parameter Id="%AID%_P-%T%%CCC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
-                            <Parameter Id="%AID%_P-%T%%CCC%999" Name="Channel%C%NameInactive" ParameterType="%AID%_PT-Text45Byte" Text="Bezeichnung (inaktiv)" Value="" Access="Read" op:configTransfer="never" />
 
                             <Union SizeInBit="16">
                                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
@@ -67,7 +66,6 @@
 
                         <ParameterRefs>
                             <ParameterRef Id="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" RefId="%AID%_P-%T%%CCC%000" />
-                            <ParameterRef Id="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" RefId="%AID%_P-%T%%CCC%999" />
                             <ParameterRef Id="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101" RefId="%AID%_UP-%T%%CCC%001" />
                             <ParameterRef Id="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00102" RefId="%AID%_UP-%T%%CCC%001" Access="Read" />
                             <ParameterRef Id="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" RefId="%AID%_UP-%T%%CCC%002" />
@@ -93,18 +91,6 @@
                             <ParameterRef Id="%AID%_UP-%T%%CCC%064_R-%T%%CCC%06401" RefId="%AID%_UP-%T%%CCC%064" />
                             <ParameterRef Id="%AID%_UP-%T%%CCC%065_R-%T%%CCC%06501" RefId="%AID%_UP-%T%%CCC%065" />
                         </ParameterRefs>
-
-                        <ParameterCalculations>
-                            <ParameterCalculation Id="%AID%_PC-%T%%CCC%001" Language="JavaScript" Name="MarkInactive%CC%" RLTransformationFunc="BASE_MarkInactive" LRTransformationFunc="BASE_Nop"> 
-                                <LParameters>
-                                    <ParameterRefRef RefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" AliasName="TextOutput" />
-                                </LParameters>
-                                <RParameters>
-                                    <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" AliasName="TextInput" />
-                                    <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" AliasName="CheckboxInactive" />
-                                </RParameters>
-                            </ParameterCalculation>
-                        </ParameterCalculations>
 
                         <ComObjectTable>
                             <ComObject Id="%AID%_O-%T%%CCC%000" Number="%K00%" Name="CH%C%In" Text="" FunctionText="" CommunicationFlag="Enabled" ReadFlag="Disabled" WriteFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" ObjectSize="4 Bytes" DatapointType="DPT-12" />
@@ -177,7 +163,16 @@
                                     <when test="&gt;=%C%">
                                         <choose ParamRefId="%AID%_UP-%T%%CCC%001_R-%T%%CCC%00101">
                                             <when test="1">
-                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_Ping" Text="Kanal %C%: {{0:Ping ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="radar" ShowInComObjectTree="true" HelpContext="NTB-Ping">
+                                                <ParameterBlock Id="%AID%_PB-%T%%CCC%001" Name="f%CC%NB_Ping" Text="Kanal %C%: {{0:Ping ...}}" TextParameterRefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" Icon="radar" ShowInComObjectTree="true" HelpContext="NTB-Ping">
+                                                    <!-- Inactive marker -->
+                                                    <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
+                                                        <when test="0">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%001" RefId="%AID%_PB-%T%%CCC%001" Text="Kanal %C%: {{0:Ping ...}}" />
+                                                        </when>
+                                                        <when test="1">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%101" RefId="%AID%_PB-%T%%CCC%001" Text="Kanal %C%: &#x26D4; {{0:Ping ...}}" />
+                                                        </when>
+                                                    </choose>
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Ping" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
@@ -212,7 +207,16 @@
                                                 </ParameterBlock>
                                             </when>
                                             <when test="2">
-                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_WOL" Text="Kanal %C%: {{0:WOL ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="upload-network" ShowInComObjectTree="true" HelpContext="NTB-WOL">
+                                                <ParameterBlock Id="%AID%_PB-%T%%CCC%002" Name="f%CC%NB_WOL" Text="Kanal %C%: {{0:WOL ...}}" TextParameterRefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" Icon="upload-network" ShowInComObjectTree="true" HelpContext="NTB-WOL">
+                                                    <!-- Inactive marker -->
+                                                    <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
+                                                        <when test="0">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%002" RefId="%AID%_PB-%T%%CCC%002" Text="Kanal %C%: {{0:WOL ...}}" />
+                                                        </when>
+                                                        <when test="1">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%102" RefId="%AID%_PB-%T%%CCC%002" Text="Kanal %C%: &#x26D4; {{0:WOL ...}}" />
+                                                        </when>
+                                                    </choose>
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wake on LAN" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
@@ -225,7 +229,16 @@
                                                 </ParameterBlock>
                                             </when>
                                             <when test="3">
-                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_WebhookIn" Text="Kanal %C%: {{0:Web In ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="earth-arrow-left" ShowInComObjectTree="true" HelpContext="NTB-WebhookIn">
+                                                <ParameterBlock Id="%AID%_PB-%T%%CCC%003" Name="f%CC%NB_WebhookIn" Text="Kanal %C%: {{0:Web In ...}}" TextParameterRefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" Icon="earth-arrow-left" ShowInComObjectTree="true" HelpContext="NTB-WebhookIn">
+                                                    <!-- Inactive marker -->
+                                                    <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
+                                                        <when test="0">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%003" RefId="%AID%_PB-%T%%CCC%003" Text="Kanal %C%: {{0:Web In ...}}" />
+                                                        </when>
+                                                        <when test="1">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%103" RefId="%AID%_PB-%T%%CCC%003" Text="Kanal %C%: &#x26D4; {{0:Web In ...}}" />
+                                                        </when>
+                                                    </choose>
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Webhook empfangen" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
@@ -238,7 +251,16 @@
                                                 </ParameterBlock>
                                             </when>
                                             <when test="4">
-                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_WebhookOut" Text="Kanal %C%: {{0:Web Out ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="earth-arrow-right" ShowInComObjectTree="true" HelpContext="NTB-WebhookOut">
+                                                <ParameterBlock Id="%AID%_PB-%T%%CCC%004" Name="f%CC%NB_WebhookOut" Text="Kanal %C%: {{0:Web Out ...}}" TextParameterRefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" Icon="earth-arrow-right" ShowInComObjectTree="true" HelpContext="NTB-WebhookOut">
+                                                    <!-- Inactive marker -->
+                                                    <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
+                                                        <when test="0">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%004" RefId="%AID%_PB-%T%%CCC%004" Text="Kanal %C%: {{0:Web Out ...}}" />
+                                                        </when>
+                                                        <when test="1">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%104" RefId="%AID%_PB-%T%%CCC%004" Text="Kanal %C%: &#x26D4; {{0:Web Out ...}}" />
+                                                        </when>
+                                                    </choose>
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Webhook senden" UIHint="Headline" />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
                                                     <ParameterRefRef RefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201" IndentLevel="1" HelpContext="NTB-Kanal-deaktivieren" />
@@ -262,7 +284,16 @@
                                                 </ParameterBlock>
                                             </when>
                                             <when test="5">
-                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_MqttIn" Text="Kanal %C%: {{0:MQTT In ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="message-arrow-left-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttIn">
+                                                <ParameterBlock Id="%AID%_PB-%T%%CCC%005" Name="f%CC%NB_MqttIn" Text="Kanal %C%: {{0:MQTT In ...}}" TextParameterRefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" Icon="message-arrow-left-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttIn">
+                                                    <!-- Inactive marker -->
+                                                    <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
+                                                        <when test="0">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%005" RefId="%AID%_PB-%T%%CCC%005" Text="Kanal %C%: {{0:MQTT In ...}}" />
+                                                        </when>
+                                                        <when test="1">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%105" RefId="%AID%_PB-%T%%CCC%005" Text="Kanal %C%: &#x26D4; {{0:MQTT In ...}}" />
+                                                        </when>
+                                                    </choose>
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="MQTT empfangen" UIHint="Headline" />
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: MQTT muss im Netzwerk-Modul aktiviert und konfiguriert sein." />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
@@ -289,7 +320,16 @@
                                                 </ParameterBlock>
                                             </when>
                                             <when test="6">
-                                                <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%NB_MqttOut" Text="Kanal %C%: {{0:MQTT Out ...}}" TextParameterRefId="%AID%_P-%T%%CCC%999_R-%T%%CCC%99901" Icon="message-arrow-right-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttOut">
+                                                <ParameterBlock Id="%AID%_PB-%T%%CCC%006" Name="f%CC%NB_MqttOut" Text="Kanal %C%: {{0:MQTT Out ...}}" TextParameterRefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" Icon="message-arrow-right-outline" ShowInComObjectTree="true" HelpContext="NTB-MqttOut">
+                                                    <!-- Inactive marker -->
+                                                    <choose ParamRefId="%AID%_UP-%T%%CCC%002_R-%T%%CCC%00201">
+                                                        <when test="0">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%006" RefId="%AID%_PB-%T%%CCC%006" Text="Kanal %C%: {{0:MQTT Out ...}}" />
+                                                        </when>
+                                                        <when test="1">
+                                                            <Rename Id="%AID%_PR-%T%%CCC%106" RefId="%AID%_PB-%T%%CCC%006" Text="Kanal %C%: &#x26D4; {{0:MQTT Out ...}}" />
+                                                        </when>
+                                                    </choose>
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="MQTT senden" UIHint="Headline" />
                                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: MQTT muss im Netzwerk-Modul aktiviert und konfiguriert sein." />
                                                     <ParameterRefRef RefId="%AID%_P-%T%%CCC%000_R-%T%%CCC%00001" IndentLevel="1" HelpContext="NTB-Bezeichnung" />
