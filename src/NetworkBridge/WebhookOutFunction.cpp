@@ -1,6 +1,6 @@
 #include "WebhookOutFunction.h"
 #include "knxprod.h"
-#ifdef OPENKNX_WEBCLIENT
+#if defined(OPENKNX_WEBCLIENT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     #include "NetworkModule.h"
     #include <LittleFS.h>
 #endif
@@ -24,7 +24,7 @@ void WebhookOutFunction::processInputKo(GroupObject &ko)
     if (index != NTB_KoCHIn || !ko.value(DPT_Trigger) || !openknx.afterStartupDelay())
         return;
 
-#ifdef OPENKNX_WEBCLIENT
+#if defined(OPENKNX_WEBCLIENT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     char url[128];
     readChannelFileOrParam("url", url, sizeof(url), reinterpret_cast<const char*>(ParamNTB_CHWebhookOutUrl));
     if (url[0] == '\0')
@@ -105,7 +105,7 @@ void WebhookOutFunction::loop()
 
 std::string WebhookOutFunction::readBodyFile()
 {
-#ifdef OPENKNX_WEBCLIENT
+#if defined(OPENKNX_WEBCLIENT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     static char bodyBuf[4096];
     bodyBuf[0] = '\0';
     readChannelFile("body", bodyBuf, sizeof(bodyBuf));
