@@ -1,7 +1,7 @@
 #include "MqttInFunction.h"
 #include "knxprod.h"
 #include <cstring>
-#ifdef OPENKNX_MQTT
+#if defined(OPENKNX_MQTT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     #include "NetworkModule.h"
     #include "OpenKNX/Format/JSON/Reader.h"
 #endif
@@ -14,7 +14,7 @@ MqttInFunction::MqttInFunction(uint8_t channelIndex)
 void MqttInFunction::setup()
 {
     OpenKNX::Channel::setup();
-#ifdef OPENKNX_MQTT
+#if defined(OPENKNX_MQTT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     _dpt = ParamNTB_CHMqttInDpt;
     _jsonEnabled = ParamNTB_CHMqttInJsonEnabled;
 

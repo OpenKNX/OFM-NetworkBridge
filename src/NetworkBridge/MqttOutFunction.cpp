@@ -1,7 +1,7 @@
 #include "MqttOutFunction.h"
 #include "knxprod.h"
 #include <cstring>
-#ifdef OPENKNX_MQTT
+#if defined(OPENKNX_MQTT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     #include "NetworkModule.h"
 #endif
 
@@ -21,7 +21,7 @@ void MqttOutFunction::processInputKo(GroupObject& ko)
     if (index != NTB_KoCHIn)
         return;
 
-#ifdef OPENKNX_MQTT
+#if defined(OPENKNX_MQTT) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     char topic[128];
     readChannelFileOrParam("topic", topic, sizeof(topic), reinterpret_cast<const char*>(ParamNTB_CHMqttOutTopic));
     if (topic[0] == '\0')

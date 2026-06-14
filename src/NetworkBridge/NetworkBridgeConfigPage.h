@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
 
     #include "NetworkModule.h"
 
@@ -16,4 +16,4 @@ class NetworkBridgeConfigPage
     void handleSave(OpenKNX::Network::WebRequest& req, OpenKNX::Network::WebResponse& res);
 };
 
-#endif // OPENKNX_WEBSERVER
+#endif // OPENKNX_WEBSERVER && KNX_IP

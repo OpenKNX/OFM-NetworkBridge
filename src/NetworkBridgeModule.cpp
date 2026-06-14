@@ -21,7 +21,7 @@ void NetworkBridgeModule::setup(bool configured)
     Module::setup(configured);
     NTBChannelOwnerModule::initialize(configured ? ParamNTB_VisibleChannels : 0);
     NTBChannelOwnerModule::setup(configured);
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     _configPage.setup();
 #endif
 }

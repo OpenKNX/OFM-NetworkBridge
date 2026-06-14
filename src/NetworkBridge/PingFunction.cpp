@@ -1,6 +1,8 @@
 #include "PingFunction.h"
-#include "NetworkModule.h"
 #include "knxprod.h"
+#if defined(OPENKNX_PING) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
+    #include "NetworkModule.h"
+#endif
 
 PingFunction::PingFunction(uint8_t channelIndex)
     : NetworkBridgeFunction(channelIndex, "Ping")
@@ -69,7 +71,7 @@ void PingFunction::triggerPing()
         return;
     }
 
-#ifdef OPENKNX_PING
+#if defined(OPENKNX_PING) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     _pingRunning = true;
     logDebugP("Ping triggered to %s", _targetAddress.toString().c_str());
     openknxNetwork.ping(_targetAddress, [this](IPAddress ip, bool reachable)

@@ -2,7 +2,7 @@
 #include "ChannelOwnerModule.h"
 #include "ModuleVersionCheck.h"
 #include "MemoryAllocator.h"
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     #include "NetworkBridge/NetworkBridgeConfigPage.h"
 #endif
 
@@ -21,7 +21,7 @@ public:
 protected:
     OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */) override;
 
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     NetworkBridgeConfigPage _configPage;
 #endif
 };

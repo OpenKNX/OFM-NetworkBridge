@@ -1,6 +1,6 @@
 #include "WebhookInFunction.h"
 #include "knxprod.h"
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     #include "NetworkModule.h"
 #endif
 
@@ -12,7 +12,7 @@ WebhookInFunction::WebhookInFunction(uint8_t channelIndex)
 void WebhookInFunction::setup()
 {
     OpenKNX::Channel::setup();
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
     char path[64];
     snprintf(path, sizeof(path), "/webhook/%s", reinterpret_cast<const char*>(ParamNTB_CHWebhookInPath));
 

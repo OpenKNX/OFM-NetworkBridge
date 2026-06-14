@@ -1,6 +1,6 @@
 #include "NetworkBridgeConfigPage.h"
 
-#ifdef OPENKNX_WEBSERVER
+#if defined(OPENKNX_WEBSERVER) && (defined(KNX_IP_WIFI) || defined(KNX_IP_LAN))
 
     #include "NetworkBridgeFunction.h"
     #include "NetworkBridgeModule.h"
@@ -272,4 +272,4 @@ void NetworkBridgeConfigPage::handleSave(WebRequest& req, WebResponse& res)
     res.send("OK");
 }
 
-#endif // OPENKNX_WEBSERVER
+#endif // OPENKNX_WEBSERVER && KNX_IP
